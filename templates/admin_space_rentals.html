@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Space Rentals - Church Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .admin-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .admin-nav a:hover, .admin-nav a.active {
+            background: #8B4513;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .rentals-list {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .rental-item {
+            padding: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rental-item:last-child {
+            border-bottom: none;
+        }
+
+        .rental-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .rental-info h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .contact-info i {
+            color: #8B4513;
+            width: 16px;
+        }
+
+        .rental-date {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .rental-details {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .detail-value {
+            color: #666;
+            text-align: right;
+        }
+
+        .event-badge {
+            display: inline-block;
+            background: #8B4513;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .space-badge {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .additional-needs {
+            margin-top: 1rem;
+        }
+
+        .needs-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .need-tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .rental-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            border-left: 4px solid #8B4513;
+        }
+
+        .rental-message h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .no-rentals {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .status-pending {
+            color: #ffc107;
+        }
+
+        .priority-high {
+            border-left: 4px solid #dc3545;
+        }
+
+        .priority-medium {
+            border-left: 4px solid #ffc107;
+        }
+
+        .priority-low {
+            border-left: 4px solid #28a745;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-item select {
+            padding: 0.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .rental-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <nav class="admin-nav">
+            <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('admin_events') }}">Events</a>
+            <a href="{{ url_for('admin_space_rentals') }}" class="active">Space Rentals</a>
+            <a href="{{ url_for('admin_inquiries') }}">Inquiries</a>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <main class="admin-content">
+        <div class="page-header">
+            <h2>Space Rental Requests</h2>
+            <p>Manage and respond to space rental inquiries</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-row">
+                <label>Filter by:</label>
+                <select id="space-filter" onchange="filterRentals()">
+                    <option value="">All Spaces</option>
+                    <option value="Main Sanctuary">Main Sanctuary</option>
+                    <option value="Fellowship Hall">Fellowship Hall</option>
+                    <option value="Conference Room">Conference Room</option>
+                    <option value="Youth Room">Youth Room</option>
+                    <option value="Multiple Spaces">Multiple Spaces</option>
+                </select>
+
+                <select id="event-filter" onchange="filterRentals()">
+                    <option value="">All Event Types</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Reception">Reception</option>
+                    <option value="Conference">Conference</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="Party">Party</option>
+                    <option value="Concert">Concert</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <select id="date-filter" onchange="filterRentals()">
+                    <option value="">All Dates</option>
+                    <option value="upcoming">Upcoming Events</option>
+                    <option value="past">Past Events</option>
+                    <option value="this-month">This Month</option>
+                    <option value="next-month">Next Month</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="rentals-list">
+            {% if rentals %}
+                {% for rental in rentals %}
+                    <div class="rental-item" data-space="{{ rental.space_requested }}" data-event="{{ rental.event_type }}" data-date="{{ rental.event_date }}">
+                        <div class="rental-header">
+                            <div class="rental-info">
+                                <h3>{{ rental.name }}</h3>
+                                <div class="contact-info">
+                                    <span><i class="fas fa-envelope"></i> {{ rental.email }}</span>
+                                    <span><i class="fas fa-phone"></i> {{ rental.phone }}</span>
+                                    <span><i class="fas fa-calendar"></i> Event: {{ rental.event_date.strftime('%B %d, %Y') }}</span>
+                                    <span><i class="fas fa-clock"></i> {{ rental.start_time }} - {{ rental.end_time }}</span>
+                                </div>
+                            </div>
+                            <div class="rental-date">
+                                Submitted: {{ rental.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                            </div>
+                        </div>
+
+                        <div class="rental-details">
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Event Type:</span>
+                                    <span class="detail-value">
+                                        <span class="event-badge">{{ rental.event_type }}</span>
+                                    </span>
+                                </div>
+
+                                <div class="detail-item">
+                                    <span class="detail-label">Space Requested:</span>
+                                    <span class="detail-value">
+                                        <span class="space-badge">{{ rental.space_requested }}</span>
+                                    </span>
+                                </div>
+
+                                <div class="detail-item">
+                                    <span class="detail-label">Expected Guests:</span>
+                                    <span class="detail-value">{{ rental.guest_count }} people</span>
+                                </div>
+
+                                <div class="detail-item">
+                                    <span class="detail-label">Duration:</span>
+                                    <span class="detail-value">{{ rental.start_time }} - {{ rental.end_time }}</span>
+                                </div>
+                            </div>
+
+                            {% if rental.additional_needs %}
+                                <div class="additional-needs">
+                                    <strong>Additional Needs:</strong>
+                                    <div class="needs-list">
+                                        {% for need in rental.additional_needs.split(', ') %}
+                                            {% if need %}
+                                                <span class="need-tag">{{ need }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if rental.message %}
+                            <div class="rental-message">
+                                <h4>Additional Details:</h4>
+                                <p>{{ rental.message }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-rentals">
+                    <i class="fas fa-calendar-times" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                    <h3>No rental requests yet</h3>
+                    <p>When people submit space rental requests, they will appear here.</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <script>
+        function filterRentals() {
+            const spaceFilter = document.getElementById('space-filter').value;
+            const eventFilter = document.getElementById('event-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            const rentalItems = document.querySelectorAll('.rental-item');
+
+            const today = new Date();
+            const thisMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+            const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            const nextMonthEnd = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+
+            rentalItems.forEach(item => {
+                const space = item.dataset.space;
+                const eventType = item.dataset.event;
+                const eventDate = new Date(item.dataset.date);
+
+                let showItem = true;
+
+                // Filter by space
+                if (spaceFilter && space !== spaceFilter) {
+                    showItem = false;
+                }
+
+                // Filter by event type
+                if (eventFilter && eventType !== eventFilter) {
+                    showItem = false;
+                }
+
+                // Filter by date
+                if (dateFilter) {
+                    switch (dateFilter) {
+                        case 'upcoming':
+                            if (eventDate <= today) showItem = false;
+                            break;
+                        case 'past':
+                            if (eventDate > today) showItem = false;
+                            break;
+                        case 'this-month':
+                            if (eventDate < thisMonthStart || eventDate >= nextMonthStart) showItem = false;
+                            break;
+                        case 'next-month':
+                            if (eventDate < nextMonthStart || eventDate > nextMonthEnd) showItem = false;
+                            break;
+                    }
+                }
+
+                item.style.display = showItem ? 'block' : 'none';
+            });
+        }
+
+        // Add click handlers for quick actions (could be expanded)
+        document.addEventListener('DOMContentLoaded', function() {
+            const rentalItems = document.querySelectorAll('.rental-item');
+
+            rentalItems.forEach(item => {
+                // Add hover effect to show this is interactive
+                item.style.cursor = 'pointer';
+                item.addEventListener('mouseover', function() {
+                    this.style.backgroundColor = '#f8f9fa';
+                });
+                item.addEventListener('mouseout', function() {
+                    this.style.backgroundColor = 'white';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

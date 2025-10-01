@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Church Website</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .admin-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .admin-nav a:hover, .admin-nav a.active {
+            background: #8B4513;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 3rem;
+            color: #8B4513;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .recent-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .recent-section h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .event-item, .inquiry-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-item:last-child, .inquiry-item:last-child {
+            border-bottom: none;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .alert.success {
+            background: #e6ffe6;
+            color: #0a5f0a;
+            border: 1px solid #ccffcc;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <nav class="admin-nav">
+            <a href="{{ url_for('admin_dashboard') }}" class="active">Dashboard</a>
+            <a href="{{ url_for('admin_events') }}">Events</a>
+            <a href="{{ url_for('admin_space_rentals') }}">Space Rentals</a>
+            <a href="{{ url_for('admin_inquiries') }}">Inquiries</a>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <main class="admin-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>{{ events|length }}</h3>
+                <p>Total Events</p>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-building"></i>
+                <h3>{{ rentals|length if rentals else 0 }}</h3>
+                <p>Space Rentals</p>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-envelope"></i>
+                <h3>{{ inquiries|length }}</h3>
+                <p>Inquiries</p>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3>Active</h3>
+                <p>Website Status</p>
+            </div>
+        </div>
+
+        <div class="recent-section">
+            <h2>Recent Events</h2>
+            {% for event in events[:5] %}
+                <div class="event-item">
+                    <div>
+                        <strong>{{ event.title }}</strong>
+                        <br>
+                        <small>{{ event.event_date.strftime('%B %d, %Y') }}</small>
+                    </div>
+                    <a href="{{ url_for('admin_edit_event', event_id=event.id) }}">Edit</a>
+                </div>
+            {% endfor %}
+            <p><a href="{{ url_for('admin_events') }}">View All Events →</a></p>
+        </div>
+
+        <div class="recent-section">
+            <h2>Recent Space Rentals</h2>
+            {% if rentals %}
+                {% for rental in rentals %}
+                    <div class="inquiry-item">
+                        <div>
+                            <strong>{{ rental.name }}</strong> - {{ rental.space_requested }}
+                            <br>
+                            <small>{{ rental.event_type }} on {{ rental.event_date.strftime('%B %d, %Y') }} ({{ rental.guest_count }} guests)</small>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No rental requests yet.</p>
+            {% endif %}
+            <p><a href="{{ url_for('admin_space_rentals') }}">View All Rentals →</a></p>
+        </div>
+
+        <div class="recent-section">
+            <h2>Recent Inquiries</h2>
+            {% for inquiry in inquiries %}
+                <div class="inquiry-item">
+                    <div>
+                        <strong>{{ inquiry.name }}</strong> - {{ inquiry.email }}
+                        <br>
+                        <small>{{ inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</small>
+                    </div>
+                </div>
+            {% endfor %}
+            <p><a href="{{ url_for('admin_inquiries') }}">View All Inquiries →</a></p>
+        </div>
+    </main>
+</body>
+</html>

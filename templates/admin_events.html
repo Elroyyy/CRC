@@ -1,0 +1,232 @@
+<!-- templates/admin_events.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events - Church Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .admin-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .admin-nav a:hover, .admin-nav a.active {
+            background: #8B4513;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .events-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .events-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .events-table th,
+        .events-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .events-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .alert.success {
+            background: #e6ffe6;
+            color: #0a5f0a;
+            border: 1px solid #ccffcc;
+        }
+
+        .event-image {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .no-image {
+            width: 60px;
+            height: 40px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #999;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <nav class="admin-nav">
+            <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('admin_events') }}" class="active">Events</a>
+            <a href="{{ url_for('admin_space_rentals') }}">Space Rentals</a>
+            <a href="{{ url_for('admin_inquiries') }}">Inquiries</a>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <main class="admin-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="page-header">
+            <h2>Manage Events</h2>
+            <a href="{{ url_for('admin_add_event') }}" class="add-btn">
+                <i class="fas fa-plus"></i> Add New Event
+            </a>
+        </div>
+
+        <div class="events-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>
+                                {% if event.image_path %}
+                                    <img src="{{ url_for('static', filename=event.image_path) }}" alt="Event image" class="event-image">
+                                {% else %}
+                                    <div class="no-image">No Image</div>
+                                {% endif %}
+                            </td>
+                            <td>{{ event.title }}</td>
+                            <td>{{ event.event_date.strftime('%B %d, %Y') }}</td>
+                            <td>{{ event.created_at.strftime('%B %d, %Y') }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{{ url_for('admin_edit_event', event_id=event.id) }}" class="edit-btn">Edit</a>
+                                    <a href="{{ url_for('admin_delete_event', event_id=event.id) }}"
+                                       class="delete-btn"
+                                       onclick="return confirm('Are you sure you want to delete this event?')">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem; color: #666;">
+                                No events found. <a href="{{ url_for('admin_add_event') }}">Add your first event</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christian Revival Crusade</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader" role="status" aria-live="polite">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <img src="{{ url_for('static', filename='images/icon.png') }}">
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message Overlay -->
+    <div class="success-message" id="success-message" role="alert" aria-live="assertive">
+        <i class="fas fa-check-circle"></i>
+        <h3>Success!</h3>
+        <p>Your message has been sent successfully.</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="/" class="logo" aria-label="Christian Revival Crusadehe">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Church Logo" loading="lazy">
+    </a>
+    <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="sidebar" id="sidebar">
+        <ul class="nav-links">
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" onclick="showPage('about')">About</a></li>
+            <li><a href="#" onclick="showPage('sermons')">Sermons</a></li>
+            <li><a href="#" onclick="showPage('ministries')">Ministries</a></li>
+            <li><a href="#" onclick="showPage('events')">Events</a></li>
+            <li><a href="#" onclick="showPage('space-rentals')">Space Rental</a></li>
+            <li><a href="#" onclick="scrollToContact()">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Home Page -->
+    <div id="home" class="page active" role="main">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="particles" id="particles" aria-hidden="true"></div>
+                <div class="hero-content">
+                    <h1 class="fade-in">Christian Revival Crusade</h1>
+                    <p class="fade-in delay-1">Welcome to CRC Church Dehiwala</p>
+                    <a href="#" class="cta-button fade-in delay-2" onclick="scrollToContact()" aria-label="Join Our Community">Join Our Community</a>
+                </div>
+                <div class="scroll-indicator" aria-hidden="true">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </section>
+
+            <!-- Description Section -->
+            <section class="description section-bg">
+                <h2 class="fade-in">WORSHIP, WORD AND SERVICE</h2>
+                <p class="fade-in delay-1">We are a Church that is centered on Worship, Word and Service for the Glory of God. We seek to emphasize sound doctrine, allegiance to the historical and orthodox Faith and encourage holistic mission and ministry to the world.</p>
+            </section>
+
+            <!-- Gallery Section -->
+            <section class="gallery">
+                <div class="gallery-container">
+                    <div class="gallery-item fade-in">
+                        <img src="{{ url_for('static', filename='images/gallery1.jpeg') }}" alt="Christian Revival Crusade">
+                    </div>
+                    <div class="gallery-item fade-in">
+                        <img src="{{ url_for('static', filename='images/pic.jpg') }}" alt="Community Event">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Service Times -->
+            <section class="service-times">
+                <h2 class="fade-in">Sunday Service Schedule</h2>
+                <div class="times-container">
+                    <div class="time-item slide-in-left">
+                        <h3>Children Sunday School</h3>
+                        <p><strong>8:00 AM - 8:45 AM</strong></p>
+                    </div>
+                    <div class="time-item fade-in delay-1">
+                        <h3>Bible Study</h3>
+                        <p><strong>8:00 AM - 9:00 AM</strong></p>
+                    </div>
+                    <div class="time-item slide-in-right">
+                        <h3>Worship and Sermon</h3>
+                        <p><strong>9:00 AM - 10:30 AM</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Events Section -->
+            <section class="events">
+                <h2 class="fade-in">Recent Events</h2>
+                <div class="events-container" id="home-events">
+                    <!-- Events loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact" id="contact-section">
+                <div class="contact-container">
+                    <h2 class="fade-in">Get In Touch</h2>
+                    <form class="contact-form slide-in-left" onsubmit="submitInquiry(event)" aria-label="Contact Form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="note">Message</label>
+                            <textarea id="note" name="note" rows="5" required aria-required="true"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                    <div class="map-section slide-in-right">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.418873258146!2d79.863!3d6.839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b8f4c6b7c47%3A0x6b7e9f4a2c3d5e6!2sCampbell%20Pl%2C%20Dehiwala-Mount%20Lavinia%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1634567891234" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" aria-label="Map showing church location"></iframe>
+                        <div class="location-info">
+                            <h3>Visit Us</h3>
+                            <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
+                            <p><i class="fas fa-clock"></i> Always Welcomed</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </div>
+
+        <!-- About Page -->
+    <div id="about" class="page">
+            <div class="about-content">
+                <h1>About Our Ministry</h1>
+                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
+                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
+                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+            </div>
+    </div>
+
+    <div id="sermons" class="page">
+            <div class="about-content">
+                <h1>Sermons</h1>
+                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
+                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
+                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+            </div>
+    </div>
+
+    <div id="ministries" class="page">
+            <div class="about-content">
+                <h1>Ministries</h1>
+                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
+                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
+                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+            </div>
+    </div>
+
+        <!-- Space Rental Page -->
+    <div id="space-rentals" class="page">
+            <div class="space-rental-page">
+                <h1>Space Rental</h1>
+                <div class="rental-intro fade-in delay-1">
+                    <p>Our church facilities are available for rental for various events and gatherings. We offer beautiful, well-maintained spaces perfect for weddings, conferences, celebrations, and community events.</p>
+                    <p>All rentals support our church ministries and community outreach programs. Contact us to discuss availability and pricing.</p>
+                </div>
+                <div class="spaces-grid">
+                    <div class="space-card scale-in">
+                        <img src="{{ url_for('static', filename='images/church1.jpg') }}" alt="Main Sanctuary" loading="lazy">
+                    </div>
+                    <div class="space-card scale-in">
+                        <img src="{{ url_for('static', filename='images/church2.jpg') }}" alt="Fellowship Hall" loading="lazy">
+                    </div>
+                </div>
+                <div class="rental-form-section fade-in">
+                    <form class="rental-form" onsubmit="submitRentalRequest(event)" aria-label="Space Rental Request Form">
+                        <h2>Space Rental Request</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rental-name">Full Name *</label>
+                                <input type="text" id="rental-name" name="name" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="rental-phone">Phone Number *</label>
+                                <input type="tel" id="rental-phone" name="phone" required aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rental-email">Email Address *</label>
+                                <input type="email" id="rental-email" name="email" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-type">Event Type *</label>
+                                <select id="event-type" name="event_type" required aria-required="true">
+                                    <option value="">Select event type</option>
+                                    <option value="Wedding">Wedding</option>
+                                    <option value="Reception">Reception</option>
+                                    <option value="Conference">Conference</option>
+                                    <option value="Meeting">Meeting</option>
+                                    <option value="Seminar">Seminar</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="space-requested">Space Requested *</label>
+                                <select id="space-requested" name="space_requested" required aria-required="true">
+                                    <option value="">Select space</option>
+                                    <option value="Main Sanctuary">Main Sanctuary (300 people)</option>
+                                    <option value="Fellowship Hall">Fellowship Hall (150 people)</option>
+                                    <option value="Conference Room">Conference Room (50 people)</option>
+                                    <option value="Youth Room">Youth Room (75 people)</option>
+                                    <option value="Multiple Spaces">Multiple Spaces</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="guest-count">Expected Guest Count *</label>
+                                <input type="number" id="guest-count" name="guest_count" min="1" required aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-date">Event Date *</label>
+                                <input type="date" id="event-date" name="event_date" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="start-time">Start Time *</label>
+                                <input type="time" id="start-time" name="start_time" required aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="end-time">End Time *</label>
+                                <input type="time" id="end-time" name="end_time" required aria-required="true">
+                            </div>
+                            <div class="form-group"></div>
+                        </div>
+                        <div class="checkbox-group">
+                            <label>Additional Needs (check all that apply):</label>
+                            <div class="checkbox-options">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="need-sound" name="additional_needs" value="Sound System">
+                                    <label for="need-sound">Sound System</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="need-projector" name="additional_needs" value="Projector/Screen">
+                                    <label for="need-projector">Projector/Screen</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="need-kitchen" name="additional_needs" value="Kitchen Access">
+                                    <label for="need-kitchen">Kitchen Access</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="need-setup" name="additional_needs" value="Setup/Cleanup Help">
+                                    <label for="need-setup">Setup/Cleanup Help</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="need-security" name="additional_needs" value="Security">
+                                    <label for="need-security">Security</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="need-parking" name="additional_needs" value="Extended Parking">
+                                    <label for="need-parking">Extended Parking</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row full-width">
+                            <div class="form-group">
+                                <label for="rental-message">Additional Details/Special Requests</label>
+                                <textarea id="rental-message" name="message" rows="5" placeholder="Please provide any additional details about your event, special requirements, or questions..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit Rental Request</button>
+                        <p style="margin-top: 1rem; text-align: center; color: #666; font-size: 0.9rem;">
+                            * Required fields. We will contact you within 24-48 hours to discuss availability and pricing.
+                        </p>
+                    </form>
+                </div>
+            </div>
+    </div>
+
+        <!-- Events Page -->
+    <div id="events" class="page">
+            <div class="events-page">
+                <h1>Church Events</h1>
+                <div class="events-container" id="all-events">
+                    <!-- Events will be loaded dynamically -->
+                </div>
+            </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@revivalcrusade.org</p>
+            </div>
+            <div class="footer-section">
+                <h3>Service Times</h3>
+                <p><i class="fas fa-clock"></i> Children Sunday School: 8:00 AM - 8:45 AM</p>
+                <p><i class="fas fa-clock"></i> Bible Study: 8:00 AM - 9:00 AM</p>
+                <p><i class="fas fa-clock"></i> Worship: 9:00 AM - 10:30 AM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="YouTube" aria-label="Follow us on YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Christian Revival Crusade. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
