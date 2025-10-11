@@ -138,7 +138,7 @@
                         <button type="submit" class="submit-btn">Send Message</button>
                     </form>
                     <div class="map-section slide-in-right">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.418873258146!2d79.863!3d6.839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b8f4c6b7c47%3A0x6b7e9f4a2c3d5e6!2sCampbell%20Pl%2C%20Dehiwala-Mount%20Lavinia%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1634567891234" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" aria-label="Map showing church location"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7922.547464657554!2d79.85896028247733!3d6.857759096315313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b46565a9d03%3A0x410578f022b3036d!2sChristian%20Revival%20Crusade%20Church!5e0!3m2!1sen!2slk!4v1760178256497!5m2!1sen!2slk" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" aria-label="Map showing church location"></iframe>
                         <div class="location-info">
                             <h3>Visit Us</h3>
                             <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
@@ -151,16 +151,16 @@
 
         <!-- About Page -->
     <div id="about" class="page">
-    <div class="about-content">
-        <h1>About Us</h1>
-        <div class="about-text">
-            <img src="{{ url_for('static', filename='images/pastor.png') }}" alt="Our Pastor" class="about-image">
-            <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
-            <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
-            <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+        <div class="about-content">
+            <h1>About Us</h1>
+            <div class="about-text">
+                <img src="{{ url_for('static', filename='images/pastor.png') }}" alt="Our Pastor" class="about-image">
+                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
+                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
+                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+            </div>
         </div>
     </div>
-</div>
 
     <div id="sermons" class="page">
             <div class="about-content">
@@ -172,11 +172,51 @@
     </div>
 
     <div id="ministries" class="page">
-            <div class="about-content">
+            <div class="ministries-content">
                 <h1>Ministries</h1>
-                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
-                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
-                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+                <p class="fade-in delay-1">At Christian Revival Crusade, we believe in serving God through diverse ministries that touch every generation. Each ministry is designed to nurture faith, build community, and serve others in the love of Christ.</p>
+            </div>
+            <div class="ministries-grid">
+                    <!-- Bethel Home -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Bethel Home</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <!-- Children's Ministry -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Rakwana Sub Church</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <!-- Children's Ministry -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Dematagoda Sub Church</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <!-- Children's Ministry -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Vavuniya School</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
             </div>
     </div>
 
