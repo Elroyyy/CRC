@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Sermons - Church Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .admin-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .admin-nav a:hover, .admin-nav a.active {
+            background: #8B4513;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-btn:hover {
+            background: #218838;
+        }
+
+        .sermons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .sermon-admin-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .sermon-admin-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .sermon-admin-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .sermon-admin-content {
+            padding: 1.5rem;
+        }
+
+        .sermon-admin-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .sermon-admin-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sermon-admin-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .sermon-media-badges {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .media-badge {
+            padding: 0.3rem 0.7rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .video-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .audio-badge {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .edit-btn, .delete-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #0056b3;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .alert.success {
+            background: #e6ffe6;
+            color: #0a5f0a;
+            border: 1px solid #ccffcc;
+        }
+
+        .alert.error {
+            background: #ffe6e6;
+            color: #d00;
+            border: 1px solid #fcc;
+        }
+
+        .no-sermons {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .no-sermons i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <nav class="admin-nav">
+            <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('admin_events') }}">Events</a>
+            <a href="{{ url_for('admin_sermons') }}" class="active">Sermons</a>
+            <a href="{{ url_for('admin_space_rentals') }}">Space Rentals</a>
+            <a href="{{ url_for('admin_inquiries') }}">Inquiries</a>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <main class="admin-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="page-header">
+            <h2>Manage Sermons</h2>
+            <a href="{{ url_for('admin_add_sermon') }}" class="add-btn">
+                <i class="fas fa-plus"></i> Add New Sermon
+            </a>
+        </div>
+
+        {% if sermons %}
+            <div class="sermons-grid">
+                {% for sermon in sermons %}
+                    <div class="sermon-admin-card">
+                        <img src="{{ url_for('static', filename=sermon.image_path) if sermon.image_path else url_for('static', filename='images/event.jpg') }}"
+                             alt="{{ sermon.title }}"
+                             class="sermon-admin-image"
+                             onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
+
+                        <div class="sermon-admin-content">
+                            <h3 class="sermon-admin-title">{{ sermon.title }}</h3>
+
+                            <div class="sermon-admin-meta">
+                                <span><i class="fas fa-calendar"></i> {{ sermon.sermon_date.strftime('%b %d, %Y') }}</span>
+                                <span><i class="fas fa-user"></i> {{ sermon.preacher or 'Pastor' }}</span>
+                            </div>
+
+                            <div class="sermon-media-badges">
+                                {% if sermon.video_link or sermon.video_path %}
+                                    <span class="media-badge video-badge">
+                                        <i class="fas fa-video"></i> Video
+                                    </span>
+                                {% endif %}
+                                {% if sermon.audio_link or sermon.audio_path %}
+                                    <span class="media-badge audio-badge">
+                                        <i class="fas fa-headphones"></i> Audio
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                            <div class="action-buttons">
+                                <a href="{{ url_for('admin_edit_sermon', sermon_id=sermon.id) }}" class="edit-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{{ url_for('admin_delete_sermon', sermon_id=sermon.id) }}"
+                                   class="delete-btn"
+                                   onclick="return confirm('Are you sure you want to delete this sermon? All associated files will be removed.')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-sermons">
+                <i class="fas fa-book-open"></i>
+                <h3>No sermons yet</h3>
+                <p>Click "Add New Sermon" to create your first sermon.</p>
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>

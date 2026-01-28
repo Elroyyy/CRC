@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christian Revival Crusade</title>
+    <title>DCC</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 </head>
@@ -15,7 +18,7 @@
     <div class="preloader" id="preloader" role="status" aria-live="polite">
         <div class="preloader-content">
             <div class="preloader-logo">
-                <img src="{{ url_for('static', filename='images/icon.png') }}">
+                <img src="{{ url_for('static', filename='images/Picture1.png') }}">
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
@@ -32,8 +35,8 @@
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-    <a href="/" class="logo" aria-label="Christian Revival Crusadehe">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Church Logo" loading="lazy">
+    <a href="/" class="logo" aria-label="Christian Revival Crusade">
+        <img src="{{ url_for('static', filename='images/Picture1.png') }}" alt="Church Logo" loading="lazy">
     </a>
     <button class="hamburger" aria-label="Toggle menu">
         <span></span>
@@ -58,10 +61,10 @@
     <div id="home" class="page active" role="main">
             <!-- Hero Section -->
             <section class="hero">
-                <div class="particles" id="particles" aria-hidden="true"></div>
+<!--                <div class="particles" id="particles" aria-hidden="true"></div>-->
                 <div class="hero-content">
-                    <h1 class="fade-in">Christian Revival Crusade</h1>
-                    <p class="fade-in delay-1">Welcome to CRC Church Dehiwala</p>
+                    <h1 class="fade-in">Dehiwala Community Church</h1>
+                    <p class="fade-in delay-1">Welcome to our Church</p>
                     <a href="#" class="cta-button fade-in delay-2" onclick="scrollToContact()" aria-label="Join Our Community">Join Our Community</a>
                 </div>
                 <div class="scroll-indicator" aria-hidden="true">
@@ -75,7 +78,24 @@
                 <p class="fade-in delay-1">We are a Church that is centered on Worship, Word and Service for the Glory of God. We seek to emphasize sound doctrine, allegiance to the historical and orthodox Faith and encourage holistic mission and ministry to the world.</p>
             </section>
 
-            <!-- Gallery Section -->
+
+         <!-- Events Section-->
+            <section class="events">
+                <h2 class="fade-in">Recent Events</h2>
+                <div class="events-container" id="home-events">
+
+                </div>
+            </section>
+
+            <div class="parallax">
+                <div class="parallax-bg"></div>
+                <div class="parallax-inner">
+                    <h2> </h2>
+                </div>
+            </div>
+
+
+            <!-- Gallery Section
             <section class="gallery">
                 <div class="gallery-container">
                     <div class="gallery-item fade-in">
@@ -85,9 +105,9 @@
                         <img src="{{ url_for('static', filename='images/pic.jpg') }}" alt="Community Event">
                     </div>
                 </div>
-            </section>
+            </section> -->
 
-            <!-- Service Times -->
+            <!-- Service Times
             <section class="service-times">
                 <h2 class="fade-in">Sunday Service Schedule</h2>
                 <div class="times-container">
@@ -104,15 +124,8 @@
                         <p><strong>9:00 AM - 10:30 AM</strong></p>
                     </div>
                 </div>
-            </section>
+            </section>-->
 
-            <!-- Events Section -->
-            <section class="events">
-                <h2 class="fade-in">Recent Events</h2>
-                <div class="events-container" id="home-events">
-                    <!-- Events loaded dynamically -->
-                </div>
-            </section>
 
             <!-- Contact Section -->
             <section class="contact" id="contact-section">
@@ -162,13 +175,114 @@
         </div>
     </div>
 
-    <div id="sermons" class="page">
-            <div class="about-content">
-                <h1>Sermons</h1>
-                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
-                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
-                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+
+    <!--Sermon Page -->
+   <div id="sermons" class="page">
+        <div class="sermons-page">
+            <h1 class="fade-in">Sermons</h1>
+
+            <div class="sermons-intro fade-in delay-1">
+                <p>Experience powerful, life-changing messages from God's Word. Each sermon is carefully prepared to encourage, challenge, and inspire you in your walk with Christ. Watch or listen anytime, anywhere.</p>
             </div>
+
+            <div class="sermons-grid" id="sermons-container">
+                <!-- Sample Sermon Cards - Will be loaded from backend -->
+                <div class="sermon-card scale-in" onclick="openSermon('sample1')">
+                    <div class="sermon-image">
+                        <img src="{{ url_for('static', filename='images/sermon1.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
+                        <div class="sermon-play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="sermon-content">
+                        <div class="sermon-meta">
+                            <span class="sermon-date">
+                                <i class="fas fa-calendar"></i> Nov 3, 2024
+                            </span>
+                            <span class="sermon-preacher">
+                                <i class="fas fa-user"></i> Pastor John
+                            </span>
+                        </div>
+                        <h3 class="sermon-title">Walking in Faith</h3>
+                        <p class="sermon-description">Discover how to strengthen your faith and trust in God's promises even in challenging times.</p>
+                        <div class="sermon-badges">
+                            <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
+                            <span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sermon-card scale-in delay-1" onclick="openSermon('sample2')">
+                    <div class="sermon-image">
+                        <img src="{{ url_for('static', filename='images/sermon2.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
+                        <div class="sermon-play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="sermon-content">
+                        <div class="sermon-meta">
+                            <span class="sermon-date">
+                                <i class="fas fa-calendar"></i> Oct 27, 2024
+                            </span>
+                            <span class="sermon-preacher">
+                                <i class="fas fa-user"></i> Pastor John
+                            </span>
+                        </div>
+                        <h3 class="sermon-title">The Power of Prayer</h3>
+                        <p class="sermon-description">Learn how prayer can transform your life and bring you closer to God's heart.</p>
+                        <div class="sermon-badges">
+                            <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
+                            <span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sermon-card scale-in delay-2" onclick="openSermon('sample3')">
+                    <div class="sermon-image">
+                        <img src="{{ url_for('static', filename='images/sermon3.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
+                        <div class="sermon-play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="sermon-content">
+                        <div class="sermon-meta">
+                            <span class="sermon-date">
+                                <i class="fas fa-calendar"></i> Oct 20, 2024
+                            </span>
+                            <span class="sermon-preacher">
+                                <i class="fas fa-user"></i> Guest Speaker
+                            </span>
+                        </div>
+                        <h3 class="sermon-title">Living with Purpose</h3>
+                        <p class="sermon-description">Uncover God's unique purpose for your life and how to fulfill your calling.</p>
+                        <div class="sermon-badges">
+                            <span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sermon Modal -->
+    <div class="sermon-modal" id="sermonModal">
+        <div class="sermon-modal-content">
+            <div class="sermon-modal-header">
+                <button class="close-sermon" onclick="closeSermon()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="sermon-modal-title" id="sermonTitle"></h2>
+                <div class="sermon-modal-meta">
+                    <span id="sermonDate"></span>
+                    <span id="sermonPreacher"></span>
+                </div>
+            </div>
+            <div class="sermon-modal-body">
+                <div id="sermonVideoContainer"></div>
+                <div id="sermonAudioContainer"></div>
+                <div class="sermon-description-full" id="sermonDescription"></div>
+            </div>
+        </div>
     </div>
 
     <div id="ministries" class="page">
@@ -362,14 +476,14 @@
             <div class="footer-section">
                 <h3>Contact Info</h3>
                 <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
-                <p><i class="fas fa-phone"></i> (+94) 76-005-7770</p>
-                <p><i class="fas fa-envelope"></i>elroypushparajah@gmail.com</p>
+                <p><i class="fas fa-phone"></i> (+94) 077 235 7933</p>
+                <p><i class="fas fa-envelope"></i>crcchurchdehiwala@gmail.com</p>
             </div>
             <div class="footer-section">
                 <h3>Service Times</h3>
-                <p><i class="fas fa-clock"></i> Children Sunday School: 8:00 AM - 8:45 AM</p>
-                <p><i class="fas fa-clock"></i> Bible Study: 8:00 AM - 9:00 AM</p>
-                <p><i class="fas fa-clock"></i> Worship: 9:00 AM - 10:30 AM</p>
+                <p><i class="fas fa-clock"></i> English Service: 8:00 AM - 9:00 AM</p>
+                <p><i class="fas fa-clock"></i> Children's Sunday School: 9:00 AM - 9:30 AM</p>
+                <p><i class="fas fa-clock"></i> Tamil Service: 9:30 AM - 11:00 AM</p>
             </div>
             <div class="footer-section">
                 <h3>Follow Us</h3>

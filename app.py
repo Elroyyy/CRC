@@ -519,6 +519,40 @@ def admin_delete_event(event_id):
         flash('Error deleting event', 'error')
         return redirect(url_for('admin_events'))
 
+@app.route('/admin/sermons')
+def admin_sermons():
+    if 'admin_id' not in session:
+        return redirect(url_for('admin_login'))
+
+    return render_template('admin_sermons.html')
+
+@app.route('/admin/sermons/add', methods=['GET', 'POST'])
+def admin_add_sermon():
+    if request.method == 'POST':
+        # handle form submission
+        pass
+    return render_template('admin_add_sermon.html')
+
+@app.route('/admin/sermons/edit/<int:sermon_id>', methods=['GET', 'POST'])
+def admin_edit_sermon(sermon_id):
+    #sermon = Sermon.query.get_or_404(sermon_id)
+    if request.method == 'POST':
+        # update sermon
+        pass
+    return render_template('admin_edit_sermon.html')
+
+@app.route('/admin/sermons/delete/<int:sermon_id>', methods=['POST', 'GET'])
+def admin_delete_sermon(sermon_id):
+    #sermon = Sermon.query.get_or_404(sermon_id)
+
+    # delete associated files if any
+    # delete record from DB
+    pass
+
+    flash('Sermon deleted successfully', 'success')
+    return redirect(url_for('admin_sermons'))
+
+
 
 @app.route('/admin/space-rentals')
 def admin_space_rentals():
