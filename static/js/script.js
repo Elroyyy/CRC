@@ -35,24 +35,24 @@ window.addEventListener('load', () => {
     }
 });
 
-// Create floating particles (optimized for performance)
-function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    const particleCount = window.innerWidth < 768 ? 20 : 50; // Reduce particles on mobile
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.width = particle.style.height = `${Math.random() * 4 + 2}px`;
-        particle.style.animationDelay = `${Math.random() * 8}s`;
-        particle.style.animationDuration = `${Math.random() * 4 + 4}s`;
-        particlesContainer.appendChild(particle);
-    }
-}
+// // Create floating particles (optimized for performance)
+// function createParticles() {
+//     const particlesContainer = document.getElementById('particles');
+//     const particleCount = window.innerWidth < 768 ? 20 : 50; // Reduce particles on mobile
+//     for (let i = 0; i < particleCount; i++) {
+//         const particle = document.createElement('div');
+//         particle.className = 'particle';
+//         particle.style.left = `${Math.random() * 100}%`;
+//         particle.style.width = particle.style.height = `${Math.random() * 4 + 2}px`;
+//         particle.style.animationDelay = `${Math.random() * 8}s`;
+//         particle.style.animationDuration = `${Math.random() * 4 + 4}s`;
+//         particlesContainer.appendChild(particle);
+//     }
+// }
 
 // Initialize animations
 function initializeAnimations() {
-    createParticles();
+    // createParticles();
     initializeScrollAnimations();
     initializeNavbarAnimation();
 }
@@ -402,3 +402,279 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, 1000);
 });
+
+// Sermon Data and Functions
+const sermonData = {
+    'sample1': {
+        title: "True Fasting",
+        date: "December 29, 2016",
+        preacher: "Pastor Niranjan",
+        description: "As a church we sought the face of the Lord in fasting for a week.. But it was good for God to speak to us through Pastor Niranjan.. He reminded us of the true meaning of fasting...",
+        youtubeId: "CaTb2JoALNw", // Replace with actual YouTube video ID
+        audioFile: null, // Or null if no file
+        audioLink: null // Or null if no link
+    },
+    'sample2': {
+        title: "God is in the boat",
+        date: "August 13, 2016",
+        preacher: "Pastor Robert Gallagher",
+        description: "A biblical exegesis of Mark 4: 35-41 .. The story exists to remind us that God is in the boat with us, and all we need to do is have some faith that he would take us to the other side as he promised!!! Watch, listen and be blessed!",
+        youtubeId: "kziS51dikY0", // Replace with actual YouTube video ID
+        audioFile: null,
+        audioLink: null
+    },
+    'sample3': {
+        title: "Sermon Excerpt - Truth Lovers",
+        date: "July 10, 2026",
+        preacher: "Pastor Nathanael Somanathan",
+        description: "Seeking for a reformation within tamil christian circles, with a resurgence of Gospel centred truth and sound doctrine!!",
+        youtubeId: "CyMZ_CJ4Vjo", // No video
+        audioFile: null,
+        audioLink: null
+    }
+};
+
+function openSermon(sermonKey) {
+    const sermon = sermonData[sermonKey];
+    if (!sermon) return;
+
+    const modal = document.getElementById('sermonModal');
+
+    // Set title and metadata
+    document.getElementById('sermonTitle').textContent = sermon.title;
+    document.getElementById('sermonDate').innerHTML = `<i class="fas fa-calendar"></i> ${sermon.date}`;
+    document.getElementById('sermonPreacher').innerHTML = `<i class="fas fa-user"></i> ${sermon.preacher}`;
+    document.getElementById('sermonDescription').textContent = sermon.description;
+
+    // Clear previous content
+    document.getElementById('sermonVideoContainer').innerHTML = '';
+    document.getElementById('sermonAudioContainer').innerHTML = '';
+
+    // Add YouTube video if available
+    if (sermon.youtubeId) {
+        const videoHTML = `
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/${sermon.youtubeId}?autoplay=1" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        `;
+        document.getElementById('sermonVideoContainer').innerHTML = videoHTML;
+    }
+
+    // Add audio player if available
+    if (sermon.audioFile || sermon.audioLink) {
+        let audioHTML = '<div class="audio-player">';
+        audioHTML += '<h3><i class="fas fa-headphones"></i> Listen to Audio</h3>';
+
+        // Add audio player if file is available
+        if (sermon.audioFile) {
+            audioHTML += `
+                <audio controls>
+                    <source src="${sermon.audioFile}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            `;
+        }
+
+        // Add download/external links
+        audioHTML += '<div class="audio-links">';
+
+        if (sermon.audioFile) {
+            audioHTML += `
+                <a href="${sermon.audioFile}" download class="audio-link">
+                    <i class="fas fa-download"></i> Download Audio
+                </a>
+            `;
+        }
+
+        if (sermon.audioLink) {
+            audioHTML += `
+                <a href="${sermon.audioLink}" target="_blank" class="audio-link">
+                    <i class="fab fa-google-drive"></i> Listen on Google Drive
+                </a>
+            `;
+        }
+
+        audioHTML += '</div></div>';
+        document.getElementById('sermonAudioContainer').innerHTML = audioHTML;
+    }
+
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSermon() {
+    const modal = document.getElementById('sermonModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+
+    // Stop video playback
+    const videoContainer = document.getElementById('sermonVideoContainer');
+    videoContainer.innerHTML = '';
+}
+
+// Close sermon modal when clicking outside
+document.getElementById('sermonModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSermon();
+    }
+});
+
+// Load sermons from API
+function loadSermons() {
+    fetch('/api/sermons')
+        .then(response => response.json())
+        .then(sermons => {
+            if (sermons && sermons.length > 0) {
+                displaySermons(sermons);
+            }
+        })
+        .catch(error => {
+            console.error('Error loading sermons:', error);
+            // Keep default sample sermons if API fails
+        });
+}
+
+function displaySermons(sermons) {
+    const container = document.getElementById('sermons-container');
+
+    const sermonsHTML = sermons.map((sermon, index) => {
+        const badges = [];
+        if (sermon.video_link || sermon.video_path) {
+            badges.push('<span class="sermon-badge"><i class="fas fa-video"></i> Video</span>');
+        }
+        if (sermon.audio_link || sermon.audio_path) {
+            badges.push('<span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>');
+        }
+
+        return `
+            <div class="sermon-card scale-in delay-${index % 3}" onclick="openSermonFromAPI(${sermon.id})">
+                <div class="sermon-image">
+                    <img src="${sermon.image_path ? '/static/' + sermon.image_path : '/static/images/event.jpg'}" alt="${sermon.title}">
+                    <div class="sermon-play-overlay">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="sermon-content">
+                    <div class="sermon-meta">
+                        <span class="sermon-date">
+                            <i class="fas fa-calendar"></i> ${new Date(sermon.sermon_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </span>
+                        <span class="sermon-preacher">
+                            <i class="fas fa-user"></i> ${sermon.preacher || 'Pastor'}
+                        </span>
+                    </div>
+                    <h3 class="sermon-title">${sermon.title}</h3>
+                    <p class="sermon-description">${sermon.description.substring(0, 100)}...</p>
+                    <div class="sermon-badges">
+                        ${badges.join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = sermonsHTML;
+}
+
+function openSermonFromAPI(sermonId) {
+    fetch(`/api/sermons/${sermonId}`)
+        .then(response => response.json())
+        .then(sermon => {
+            // Convert API sermon to modal format
+            const modal = document.getElementById('sermonModal');
+
+            document.getElementById('sermonTitle').textContent = sermon.title;
+            document.getElementById('sermonDate').innerHTML = `<i class="fas fa-calendar"></i> ${new Date(sermon.sermon_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+            document.getElementById('sermonPreacher').innerHTML = `<i class="fas fa-user"></i> ${sermon.preacher || 'Pastor'}`;
+            document.getElementById('sermonDescription').textContent = sermon.description;
+
+            document.getElementById('sermonVideoContainer').innerHTML = '';
+            document.getElementById('sermonAudioContainer').innerHTML = '';
+
+            // Handle video (YouTube link or file)
+            if (sermon.video_link) {
+                const youtubeId = extractYouTubeID(sermon.video_link);
+                if (youtubeId) {
+                    document.getElementById('sermonVideoContainer').innerHTML = `
+                        <div class="video-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/${youtubeId}?autoplay=1" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    `;
+                }
+            } else if (sermon.video_path) {
+                document.getElementById('sermonVideoContainer').innerHTML = `
+                    <div class="video-container">
+                        <video controls autoplay style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="/static/${sermon.video_path}" type="video/mp4">
+                            Your browser does not support the video element.
+                        </video>
+                    </div>
+                `;
+            }
+
+            // Handle audio
+            if (sermon.audio_path || sermon.audio_link) {
+                let audioHTML = '<div class="audio-player">';
+                audioHTML += '<h3><i class="fas fa-headphones"></i> Listen to Audio</h3>';
+
+                if (sermon.audio_path) {
+                    audioHTML += `
+                        <audio controls>
+                            <source src="/static/${sermon.audio_path}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    `;
+                }
+
+                audioHTML += '<div class="audio-links">';
+
+                if (sermon.audio_path) {
+                    audioHTML += `
+                        <a href="/static/${sermon.audio_path}" download class="audio-link">
+                            <i class="fas fa-download"></i> Download Audio
+                        </a>
+                    `;
+                }
+
+                if (sermon.audio_link) {
+                    audioHTML += `
+                        <a href="${sermon.audio_link}" target="_blank" class="audio-link">
+                            <i class="fab fa-google-drive"></i> Listen on Google Drive
+                        </a>
+                    `;
+                }
+
+                audioHTML += '</div></div>';
+                document.getElementById('sermonAudioContainer').innerHTML = audioHTML;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        })
+        .catch(error => {
+            console.error('Error loading sermon:', error);
+            alert('Error loading sermon. Please try again.');
+        });
+}
+
+function extractYouTubeID(url) {
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[7].length === 11) ? match[7] : null;
+}
+
+// Load sermons when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Uncomment when API is ready
+    // loadSermons();
+});
+

@@ -172,15 +172,6 @@ def submit_inquiry():
         db.session.add(new_inquiry)
         db.session.commit()
 
-        subject = f"New Inquiry from {data['name']}"
-        body = f"""
-                📩 New Inquiry Received
-
-                Name: {data['name']}
-                Phone: {data['phone']}
-                Email: {data['email']}
-                Note: {data['note']}
-                """
 
         # Prepare email content
         subject = f"New Inquiry from {data['name']}"
@@ -428,14 +419,22 @@ def admin_add_event_post():
 @app.route('/admin/events/edit/<int:event_id>')
 def admin_edit_event(event_id):
     if 'admin_id' not in session:
+        flash('Please log in to access admin features', 'error')
         return redirect(url_for('admin_login'))
 
     try:
-        event = Event.query.get_or_404(event_id)
+        print(f"Attempting to load event ID: {event_id}")  # Debug log
+        event = Event.query.get(event_id)
+        if not event:
+            print(f"No event found for ID: {event_id}")  # Debug log
+            flash(f'Event with ID {event_id} not found. It may have been deleted.', 'error')
+            return redirect(url_for('admin_events'))
+
+        print(f"Event loaded: ID={event.id}, Title={event.title}, Date={event.event_date}")  # Debug log
         return render_template('admin_edit_event.html', event=event)
     except Exception as e:
-        print(f"Edit event error: {e}")
-        flash('Event not found', 'error')
+        print(f"Error loading event ID {event_id}: {str(e)}")  # Detailed error log
+        flash(f'Error loading event: {str(e)}', 'error')
         return redirect(url_for('admin_events'))
 
 
@@ -445,7 +444,10 @@ def admin_edit_event_post(event_id):
         return redirect(url_for('admin_login'))
 
     try:
-        event = Event.query.get_or_404(event_id)
+        event = Event.query.get(event_id)
+        if not event:
+            flash('Event not found', 'error')
+            return redirect(url_for('admin_events'))
 
         title = request.form.get('title')
         description = request.form.get('description')
@@ -467,7 +469,10 @@ def admin_edit_event_post(event_id):
                 if event.image_path:
                     old_image_path = os.path.join('static', event.image_path)
                     if os.path.exists(old_image_path):
-                        os.remove(old_image_path)
+                        try:
+                            os.remove(old_image_path)
+                        except Exception as e:
+                            print(f"Error deleting old image: {e}")
 
                 # Save new image
                 event.image_path = save_uploaded_file(file, 'events')
@@ -477,8 +482,9 @@ def admin_edit_event_post(event_id):
         flash('Event updated successfully!', 'success')
         return redirect(url_for('admin_events'))
 
-    except ValueError:
+    except ValueError as e:
         flash('Invalid date format', 'error')
+        print(f"Date error: {e}")
         return redirect(url_for('admin_edit_event', event_id=event_id))
     except Exception as e:
         print(f"Update event error: {e}")
@@ -512,6 +518,40 @@ def admin_delete_event(event_id):
         db.session.rollback()
         flash('Error deleting event', 'error')
         return redirect(url_for('admin_events'))
+
+@app.route('/admin/sermons')
+def admin_sermons():
+    if 'admin_id' not in session:
+        return redirect(url_for('admin_login'))
+
+    return render_template('admin_sermons.html')
+
+@app.route('/admin/sermons/add', methods=['GET', 'POST'])
+def admin_add_sermon():
+    if request.method == 'POST':
+        # handle form submission
+        pass
+    return render_template('admin_add_sermon.html')
+
+@app.route('/admin/sermons/edit/<int:sermon_id>', methods=['GET', 'POST'])
+def admin_edit_sermon(sermon_id):
+    #sermon = Sermon.query.get_or_404(sermon_id)
+    if request.method == 'POST':
+        # update sermon
+        pass
+    return render_template('admin_edit_sermon.html')
+
+@app.route('/admin/sermons/delete/<int:sermon_id>', methods=['POST', 'GET'])
+def admin_delete_sermon(sermon_id):
+    #sermon = Sermon.query.get_or_404(sermon_id)
+
+    # delete associated files if any
+    # delete record from DB
+    pass
+
+    flash('Sermon deleted successfully', 'success')
+    return redirect(url_for('admin_sermons'))
+
 
 
 @app.route('/admin/space-rentals')
