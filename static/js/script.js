@@ -406,30 +406,30 @@ document.addEventListener('DOMContentLoaded', () => {
 // Sermon Data and Functions
 const sermonData = {
     'sample1': {
-        title: "Walking in Faith",
-        date: "November 3, 2024",
-        preacher: "Pastor John",
-        description: "In this powerful message, we explore what it truly means to walk by faith and not by sight. Discover how to strengthen your faith and trust in God's promises even during life's most challenging seasons. Learn practical steps to develop unwavering faith that moves mountains.",
-        youtubeId: "dQw4w9WgXcQ", // Replace with actual YouTube video ID
-        audioFile: "/static/uploads/sermons/walking-in-faith.mp3", // Or null if no file
-        audioLink: "https://drive.google.com/file/d/YOUR_FILE_ID/view" // Or null if no link
+        title: "True Fasting",
+        date: "December 29, 2016",
+        preacher: "Pastor Niranjan",
+        description: "As a church we sought the face of the Lord in fasting for a week.. But it was good for God to speak to us through Pastor Niranjan.. He reminded us of the true meaning of fasting...",
+        youtubeId: "CaTb2JoALNw", // Replace with actual YouTube video ID
+        audioFile: null, // Or null if no file
+        audioLink: null // Or null if no link
     },
     'sample2': {
-        title: "The Power of Prayer",
-        date: "October 27, 2024",
-        preacher: "Pastor John",
-        description: "Prayer is not just a religious duty—it's a powerful conversation with the living God. This sermon reveals the transformative power of prayer and how it can change your life, your circumstances, and bring you into intimate fellowship with your Heavenly Father. Learn to pray with confidence and expectation.",
-        youtubeId: "jNQXAC9IVRw", // Replace with actual YouTube video ID
+        title: "God is in the boat",
+        date: "August 13, 2016",
+        preacher: "Pastor Robert Gallagher",
+        description: "A biblical exegesis of Mark 4: 35-41 .. The story exists to remind us that God is in the boat with us, and all we need to do is have some faith that he would take us to the other side as he promised!!! Watch, listen and be blessed!",
+        youtubeId: "kziS51dikY0", // Replace with actual YouTube video ID
         audioFile: null,
-        audioLink: "https://drive.google.com/file/d/SAMPLE_FILE_ID/view"
+        audioLink: null
     },
     'sample3': {
-        title: "Living with Purpose",
-        date: "October 20, 2024",
-        preacher: "Guest Speaker",
-        description: "God has a unique purpose and calling for every person. This inspiring message helps you uncover God's specific plan for your life and provides practical guidance on how to walk in your divine purpose. Stop drifting and start living the abundant life God intended for you.",
-        youtubeId: null, // No video
-        audioFile: "/static/uploads/sermons/living-with-purpose.mp3",
+        title: "Sermon Excerpt - Truth Lovers",
+        date: "July 10, 2026",
+        preacher: "Pastor Nathanael Somanathan",
+        description: "Seeking for a reformation within tamil christian circles, with a resurgence of Gospel centred truth and sound doctrine!!",
+        youtubeId: "CyMZ_CJ4Vjo", // No video
+        audioFile: null,
         audioLink: null
     }
 };

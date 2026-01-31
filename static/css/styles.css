@@ -460,8 +460,9 @@ a:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(254, 252, 248, 0.95);
+    background: white;
     backdrop-filter: blur(1px);
+    border: 2px solid black;
 }
 
 .section-bg > * {
@@ -478,7 +479,6 @@ a:focus {
     background: #24331f;
     border: 3px solid #24331f;
     margin-bottom: 4rem;
-
 }
 
 .description h2 {
@@ -752,7 +752,7 @@ a:focus {
 }
 
 .contact-form {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.70);
     padding: 2rem;
     border-radius: 25px;
     box-shadow: var(--shadow-heavy);
@@ -783,7 +783,7 @@ a:focus {
     border: 2px solid #e0e0e0;
     border-radius: 15px;
     font-size: 1rem;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     color: var(--text-dark);
     transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -873,7 +873,7 @@ a:focus {
 
 .about-content h1 {
    text-align: center;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 600;
     margin-bottom: 3rem;
@@ -912,7 +912,7 @@ a:focus {
 
 .sermons-page h1 {
     text-align: center;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 4rem;
     font-weight: 600;
     margin-bottom: 2rem;
@@ -1248,7 +1248,7 @@ a:focus {
 
 .ministries-content h1 {
     text-align: center;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 600;
     margin-bottom: 2rem;
@@ -1452,7 +1452,6 @@ a:focus {
     object-position: center;
 }
 
-
 .space-card:hover {
     transform: translateY(-15px) rotateY(5deg);
     box-shadow: var(--shadow-heavy);
@@ -1460,7 +1459,7 @@ a:focus {
 
 
 .rental-form-section {
-    background: var(--light-bg);
+    background: #5c724a;
     padding: 4rem 2rem;
     border-radius: 30px;
     margin-top: 2rem;
@@ -1470,7 +1469,7 @@ a:focus {
 .rental-form {
     max-width: 900px;
     margin: 0 auto;
-    background: var(--white);
+    background: rgba(255, 255, 255, 0.70);
     padding: 2rem;
     border-radius: 25px;
     box-shadow: var(--shadow-medium);
