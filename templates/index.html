@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christian Revival Crusade</title>
+    <title>DCC</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 </head>
@@ -15,7 +18,7 @@
     <div class="preloader" id="preloader" role="status" aria-live="polite">
         <div class="preloader-content">
             <div class="preloader-logo">
-                <img src="{{ url_for('static', filename='images/icon.png') }}">
+                <img src="{{ url_for('static', filename='images/Picture1.png') }}">
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
@@ -32,8 +35,8 @@
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-    <a href="/" class="logo" aria-label="Christian Revival Crusadehe">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Church Logo" loading="lazy">
+    <a href="/" class="logo" aria-label="Christian Revival Crusade">
+        <img src="{{ url_for('static', filename='images/Picture1.png') }}" alt="Church Logo" loading="lazy">
     </a>
     <button class="hamburger" aria-label="Toggle menu">
         <span></span>
@@ -58,11 +61,11 @@
     <div id="home" class="page active" role="main">
             <!-- Hero Section -->
             <section class="hero">
-                <div class="particles" id="particles" aria-hidden="true"></div>
+<!--                <div class="particles" id="particles" aria-hidden="true"></div>-->
                 <div class="hero-content">
-                    <h1 class="fade-in">Christian Revival Crusade</h1>
-                    <p class="fade-in delay-1">Welcome to CRC Church Dehiwala</p>
-                    <a href="#" class="cta-button fade-in delay-2" onclick="scrollToContact()" aria-label="Join Our Community">Join Our Community</a>
+<!--                    <h1 class="fade-in">Dehiwala Community Church</h1>-->
+<!--                    <p class="fade-in delay-1">Welcome to our Church</p>-->
+<!--                    <a href="#" class="cta-button fade-in delay-2" onclick="scrollToContact()" aria-label="Join Our Community">Join Our Community</a>-->
                 </div>
                 <div class="scroll-indicator" aria-hidden="true">
                     <i class="fas fa-chevron-down"></i>
@@ -75,7 +78,24 @@
                 <p class="fade-in delay-1">We are a Church that is centered on Worship, Word and Service for the Glory of God. We seek to emphasize sound doctrine, allegiance to the historical and orthodox Faith and encourage holistic mission and ministry to the world.</p>
             </section>
 
-            <!-- Gallery Section -->
+
+         <!-- Events Section-->
+            <section class="events">
+                <h2 class="fade-in">Recent Events</h2>
+                <div class="events-container" id="home-events">
+
+                </div>
+            </section>
+
+<!--            <div class="parallax">-->
+<!--                <div class="parallax-bg"></div>-->
+<!--                <div class="parallax-inner">-->
+<!--                    <h2> </h2>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+            <!-- Gallery Section
             <section class="gallery">
                 <div class="gallery-container">
                     <div class="gallery-item fade-in">
@@ -85,9 +105,9 @@
                         <img src="{{ url_for('static', filename='images/pic.jpg') }}" alt="Community Event">
                     </div>
                 </div>
-            </section>
+            </section> -->
 
-            <!-- Service Times -->
+            <!-- Service Times
             <section class="service-times">
                 <h2 class="fade-in">Sunday Service Schedule</h2>
                 <div class="times-container">
@@ -104,15 +124,8 @@
                         <p><strong>9:00 AM - 10:30 AM</strong></p>
                     </div>
                 </div>
-            </section>
+            </section>-->
 
-            <!-- Events Section -->
-            <section class="events">
-                <h2 class="fade-in">Recent Events</h2>
-                <div class="events-container" id="home-events">
-                    <!-- Events loaded dynamically -->
-                </div>
-            </section>
 
             <!-- Contact Section -->
             <section class="contact" id="contact-section">
@@ -138,7 +151,7 @@
                         <button type="submit" class="submit-btn">Send Message</button>
                     </form>
                     <div class="map-section slide-in-right">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.418873258146!2d79.863!3d6.839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b8f4c6b7c47%3A0x6b7e9f4a2c3d5e6!2sCampbell%20Pl%2C%20Dehiwala-Mount%20Lavinia%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1634567891234" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" aria-label="Map showing church location"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7922.547464657554!2d79.85896028247733!3d6.857759096315313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b46565a9d03%3A0x410578f022b3036d!2sChristian%20Revival%20Crusade%20Church!5e0!3m2!1sen!2slk!4v1760178256497!5m2!1sen!2slk" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" aria-label="Map showing church location"></iframe>
                         <div class="location-info">
                             <h3>Visit Us</h3>
                             <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
@@ -151,29 +164,173 @@
 
         <!-- About Page -->
     <div id="about" class="page">
-            <div class="about-content">
-                <h1>About Our Ministry</h1>
+        <div class="about-content">
+            <h1>About Us</h1>
+            <div class="about-text">
+                <img src="{{ url_for('static', filename='images/pastor.png') }}" alt="Our Pastor" class="about-image">
                 <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
                 <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
                 <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
             </div>
+        </div>
     </div>
 
-    <div id="sermons" class="page">
-            <div class="about-content">
-                <h1>Sermons</h1>
-                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
-                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
-                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+
+    <!--Sermon Page -->
+   <div id="sermons" class="page">
+        <div class="sermons-page">
+            <h1 class="fade-in">Sermons</h1>
+
+            <div class="sermons-intro fade-in delay-1">
+                <p>Experience powerful, life-changing messages from God's Word. Each sermon is carefully prepared to encourage, challenge, and inspire you in your walk with Christ. Watch or listen anytime, anywhere.</p>
             </div>
+
+            <div class="sermons-grid" id="sermons-container">
+                <!-- Sample Sermon Cards - Will be loaded from backend -->
+                <div class="sermon-card scale-in" onclick="openSermon('sample1')">
+                    <div class="sermon-image">
+                        <img src="{{ url_for('static', filename='images/sermon1.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
+                        <div class="sermon-play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="sermon-content">
+                        <div class="sermon-meta">
+                            <span class="sermon-date">
+                                <i class="fas fa-calendar"></i> Dec 29, 2016
+                            </span>
+                            <span class="sermon-preacher">
+                                <i class="fas fa-user"></i> Pastor Niranjan
+                            </span>
+                        </div>
+                        <h3 class="sermon-title">True Fasting</h3>
+                        <p class="sermon-description">As a church we sought the face of the Lord in fasting for a week.. But it was good for God to speak to us through Pastor Niranjan.. He reminded us of the true meaning of fasting...</p>
+                        <div class="sermon-badges">
+                            <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
+<!--                            <span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sermon-card scale-in delay-1" onclick="openSermon('sample2')">
+                    <div class="sermon-image">
+                        <img src="{{ url_for('static', filename='images/sermon2.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
+                        <div class="sermon-play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="sermon-content">
+                        <div class="sermon-meta">
+                            <span class="sermon-date">
+                                <i class="fas fa-calendar"></i> Aug 13, 2016
+                            </span>
+                            <span class="sermon-preacher">
+                                <i class="fas fa-user"></i> Pastor Robert Gallagher
+                            </span>
+                        </div>
+                        <h3 class="sermon-title">God is in the boat</h3>
+                        <p class="sermon-description">A biblical exegesis of Mark 4: 35-41 .. The story exists to remind us that God is in the boat with us, and all we need to do is have some faith that he would take us to the other side as he promised!!! Watch, listen and be blessed!</p>
+                        <div class="sermon-badges">
+                            <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
+<!--                            <span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sermon-card scale-in delay-2" onclick="openSermon('sample3')">
+                    <div class="sermon-image">
+                        <img src="{{ url_for('static', filename='images/sermon3.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
+                        <div class="sermon-play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="sermon-content">
+                        <div class="sermon-meta">
+                            <span class="sermon-date">
+                                <i class="fas fa-calendar"></i> Jul 10, 2016
+                            </span>
+                            <span class="sermon-preacher">
+                                <i class="fas fa-user"></i>Pastor Nathanael Somanathan
+                            </span>
+                        </div>
+                        <h3 class="sermon-title">Sermon Excerpt - Truth Lovers</h3>
+                        <p class="sermon-description">Seeking for a reformation within tamil christian circles, with a resurgence of Gospel centred truth and sound doctrine!!</p>
+                        <div class="sermon-badges">
+                           <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sermon Modal -->
+    <div class="sermon-modal" id="sermonModal">
+        <div class="sermon-modal-content">
+            <div class="sermon-modal-header">
+                <button class="close-sermon" onclick="closeSermon()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="sermon-modal-title" id="sermonTitle"></h2>
+                <div class="sermon-modal-meta">
+                    <span id="sermonDate"></span>
+                    <span id="sermonPreacher"></span>
+                </div>
+            </div>
+            <div class="sermon-modal-body">
+                <div id="sermonVideoContainer"></div>
+                <div id="sermonAudioContainer"></div>
+                <div class="sermon-description-full" id="sermonDescription"></div>
+            </div>
+        </div>
     </div>
 
     <div id="ministries" class="page">
-            <div class="about-content">
+            <div class="ministries-content">
                 <h1>Ministries</h1>
-                <p class="fade-in delay-1">Christian Revival Crusade was founded on the belief that every person deserves to experience the transformative love of Jesus Christ. For over two decades, we have been a beacon of hope in our community, dedicated to spreading the Gospel and nurturing spiritual growth.</p>
-                <p class="fade-in delay-2">Our mission is simple yet profound: to create a welcoming environment where people from all walks of life can encounter God's love, find healing for their hearts, and discover their divine purpose. We believe that through genuine worship, biblical teaching, and heartfelt fellowship, lives are changed and communities are transformed.</p>
-                <p class="fade-in delay-3">Led by our passionate pastoral team and supported by devoted volunteers, we offer various ministries including worship services, Bible studies, youth programs, community outreach, and prayer meetings. Our doors are always open to those seeking spiritual guidance, comfort in times of need, or simply a place to belong.</p>
+                <p class="fade-in delay-1">At Christian Revival Crusade, we believe in serving God through diverse ministries that touch every generation. Each ministry is designed to nurture faith, build community, and serve others in the love of Christ.</p>
+            </div>
+            <div class="ministries-grid">
+                    <!-- Bethel Home -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Bethel Home</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <!-- Children's Ministry -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Rakwana Sub Church</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <!-- Children's Ministry -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Dematagoda Sub Church</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <!-- Children's Ministry -->
+                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
+                        <div class="ministry-icon1">
+                            <h3>Vavuniya School</h3>
+                        </div>
+                        <div class="ministry-info">
+                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
+                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
             </div>
     </div>
 
@@ -215,8 +372,6 @@
                                 <label for="event-type">Event Type *</label>
                                 <select id="event-type" name="event_type" required aria-required="true">
                                     <option value="">Select event type</option>
-                                    <option value="Wedding">Wedding</option>
-                                    <option value="Reception">Reception</option>
                                     <option value="Conference">Conference</option>
                                     <option value="Meeting">Meeting</option>
                                     <option value="Seminar">Seminar</option>
@@ -229,11 +384,7 @@
                                 <label for="space-requested">Space Requested *</label>
                                 <select id="space-requested" name="space_requested" required aria-required="true">
                                     <option value="">Select space</option>
-                                    <option value="Main Sanctuary">Main Sanctuary (300 people)</option>
-                                    <option value="Fellowship Hall">Fellowship Hall (150 people)</option>
-                                    <option value="Conference Room">Conference Room (50 people)</option>
-                                    <option value="Youth Room">Youth Room (75 people)</option>
-                                    <option value="Multiple Spaces">Multiple Spaces</option>
+                                    <option value="Main Sanctuary">Main Sanctuary (150 people)</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -268,18 +419,6 @@
                                 <div class="checkbox-item">
                                     <input type="checkbox" id="need-projector" name="additional_needs" value="Projector/Screen">
                                     <label for="need-projector">Projector/Screen</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="need-kitchen" name="additional_needs" value="Kitchen Access">
-                                    <label for="need-kitchen">Kitchen Access</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="need-setup" name="additional_needs" value="Setup/Cleanup Help">
-                                    <label for="need-setup">Setup/Cleanup Help</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="need-security" name="additional_needs" value="Security">
-                                    <label for="need-security">Security</label>
                                 </div>
                                 <div class="checkbox-item">
                                     <input type="checkbox" id="need-parking" name="additional_needs" value="Extended Parking">
@@ -319,21 +458,29 @@
             <div class="footer-section">
                 <h3>Contact Info</h3>
                 <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
-                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                <p><i class="fas fa-envelope"></i> info@revivalcrusade.org</p>
+                <p><i class="fas fa-phone"></i> (+94) 077 235 7933</p>
+                <p><i class="fas fa-envelope"></i>crcchurchdehiwala@gmail.com</p>
             </div>
             <div class="footer-section">
                 <h3>Service Times</h3>
-                <p><i class="fas fa-clock"></i> Children Sunday School: 8:00 AM - 8:45 AM</p>
-                <p><i class="fas fa-clock"></i> Bible Study: 8:00 AM - 9:00 AM</p>
-                <p><i class="fas fa-clock"></i> Worship: 9:00 AM - 10:30 AM</p>
+                <p><i class="fas fa-clock"></i> English Service: 8:00 AM - 9:00 AM</p>
+                <p><i class="fas fa-clock"></i> Children's Sunday School: 9:00 AM - 9:30 AM</p>
+                <p><i class="fas fa-clock"></i> Tamil Service: 9:30 AM - 11:00 AM</p>
             </div>
             <div class="footer-section">
                 <h3>Follow Us</h3>
                 <div class="social-links">
-                    <a href="#https://www.facebook.com/CRCSriLankaDehiwala/" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" title="YouTube" aria-label="Follow us on YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/CRCSriLankaDehiwala/"
+                       title="Facebook" aria-label="Follow us on Facebook"
+                       target="_blank" rel="noopener noreferrer">
+                       <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@crcchurchsrilanka2461"
+                       title="YouTube" aria-label="Follow us on YouTube"
+                       target="_blank" rel="noopener noreferrer">
+                       <i class="fab fa-youtube"></i>
+                    </a>
+
                 </div>
             </div>
         </div>
