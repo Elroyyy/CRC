@@ -1428,7 +1428,7 @@ a:focus {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    color: white;
+    color: black;
 }
 
 .spaces-grid {
@@ -1477,10 +1477,10 @@ a:focus {
 
 .rental-form h2 {
     text-align: center;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', serif;
     font-size: clamp(2rem, 3vw, 2.5rem);
     font-weight: 600;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
     color: var(--primary-color);
 }
 
@@ -1497,10 +1497,20 @@ a:focus {
 
 .checkbox-group {
     margin-bottom: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .checkbox-options {
     display: grid;
+    font-family: 'Montserrat', serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
 }
