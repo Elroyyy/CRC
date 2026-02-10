@@ -166,7 +166,7 @@
                                 </div>
                             </div>
                             <div class="inquiry-date">
-                                {{ inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                                {{ inquiry[created_at] | dateformat}}
                             </div>
                         </div>
 

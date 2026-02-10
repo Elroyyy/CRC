@@ -200,14 +200,14 @@
                         <tr>
                             <td>
                                 {% if event.image_path %}
-                                    <img src="{{ url_for('static', filename=event.image_path) }}" alt="Event image" class="event-image" onerror="this.parentNode.innerHTML='<div class=no-image>No Image</div>'">
+                                    <img src="{{event['image_path'] }}" alt="Event image" class="event-image" onerror="this.parentNode.innerHTML='<div class=no-image>No Image</div>'">
                                 {% else %}
                                     <div class="no-image">No Image</div>
                                 {% endif %}
                             </td>
-                            <td>{{ event.title }}</td>
-                            <td>{{ event.event_date.strftime('%B %d, %Y') }}</td>
-                            <td>{{ event.created_at.strftime('%B %d, %Y') }}</td>
+                            <td>{{ event['title'] }}</td>
+                            <td>{{ event['event_date'] }}</td>
+                            <td>{{ event[created_at] | dateformat }}</td>
                             <td>
                                 <div class="action-buttons">
                                     <a href="{{ url_for('admin_edit_event', event_id=event.id) }}" class="edit-btn">

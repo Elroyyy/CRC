@@ -99,11 +99,18 @@ function initializeNavbarAnimation() {
 
 // Page navigation with animation
 function showPage(pageId) {
+    // Prevent default behavior
+    history.pushState(null, '', '#' + pageId);
+
     const pages = document.querySelectorAll('.page');
-    pages.forEach(page => page.classList.remove('active'));
+    pages.forEach(page => {
+        page.classList.remove('active');
+        page.style.display = 'none';
+    });
 
     const currentPage = document.getElementById(pageId);
     currentPage.classList.add('active');
+    currentPage.style.display = 'block';
 
     // Animation
     currentPage.style.opacity = '0';
@@ -115,8 +122,22 @@ function showPage(pageId) {
         currentPage.style.opacity = '1';
         currentPage.style.transform = 'translateY(0)';
     });
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    return false;
 }
+
+// Handle browser back/forward buttons
+window.addEventListener('popstate', function(event) {
+    const pageId = window.location.hash.slice(1) || 'home';
+    showPage(pageId);
+});
+
+// Handle initial page load
+document.addEventListener('DOMContentLoaded', function() {
+    const pageId = window.location.hash.slice(1) || 'home';
+    showPage(pageId);
+});
 
 // Smooth scroll to contact
 function scrollToContact() {

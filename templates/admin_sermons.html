@@ -268,7 +268,7 @@
                             <h3 class="sermon-admin-title">{{ sermon.title }}</h3>
 
                             <div class="sermon-admin-meta">
-                                <span><i class="fas fa-calendar"></i> {{ sermon.sermon_date.strftime('%b %d, %Y') }}</span>
+                                <span><i class="fas fa-calendar"></i> {{ sermon[sermon_date] | dateformat}}</span>
                                 <span><i class="fas fa-user"></i> {{ sermon.preacher or 'Pastor' }}</span>
                             </div>
 

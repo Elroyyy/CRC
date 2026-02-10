@@ -339,12 +339,12 @@
                                 <div class="contact-info">
                                     <span><i class="fas fa-envelope"></i> {{ rental.email }}</span>
                                     <span><i class="fas fa-phone"></i> {{ rental.phone }}</span>
-                                    <span><i class="fas fa-calendar"></i> Event: {{ rental.event_date.strftime('%B %d, %Y') }}</span>
+                                    <span><i class="fas fa-calendar"></i> Event: {{ rental[event_date] | dateformat}}</span>
                                     <span><i class="fas fa-clock"></i> {{ rental.start_time }} - {{ rental.end_time }}</span>
                                 </div>
                             </div>
                             <div class="rental-date">
-                                Submitted: {{ rental.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                                Submitted: {{ rental[created_at] | dateformat }}
                             </div>
                         </div>
 

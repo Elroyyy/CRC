@@ -1,1 +1,15 @@
+.venv/
+__pycache__/
+
+instance/
+
 .env
+
+database_setup_py.py
+database_viewer.py
+delete.py
+
+.idea
+
+migrate_data.py
+test_routes.py

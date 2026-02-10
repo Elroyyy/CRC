@@ -628,7 +628,7 @@ a:focus {
     font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 600;
     margin-bottom: 3rem;
-    background: var(--gradient-primary);
+    background: var(--text-dark);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -640,7 +640,7 @@ a:focus {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 600;
     margin-bottom: 4rem;
-    background: var(--gradient-secondary);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -745,7 +745,7 @@ a:focus {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 600;
     margin-bottom: 3rem;
-    background: var(--gradient-secondary);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -826,7 +826,6 @@ a:focus {
 
 .location-info {
     padding: 2rem;
-    color: #black;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -866,7 +865,7 @@ a:focus {
 
 /* About Page Styles */
 .about-content {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 6rem 2rem 4rem;
 }
@@ -876,7 +875,7 @@ a:focus {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 600;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -884,23 +883,45 @@ a:focus {
 }
 
 .about-text {
-    text-align: left;
-    margin-bottom: 4rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+   text-align: justify;
+    max-width: 1200px;
+    margin: 0 auto 5rem;
+    font-size: 1.2rem;
+    color: black;
+    line-height: 1.8;
     gap: 20px;
     flex: 1; /* Takes remaining space */
-    min-width: 300px; /* Ensures text doesn’t get too narrow */
-    color: black;
+}
+.about-content h2 {
+   text-align: justify;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 600;
+    margin-bottom: 3rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-/*.about-image {
-    float: right;  *//* makes text wrap around *//*
-    width: 180px; *//* smaller image size *//*
-    border-radius: 10px;
-    box-shadow: var(--shadow-light);
-    margin-left: 20px;*/
+.story-intro {
+    text-align: justify;
+    max-width: 1200px;
+    margin: 0 auto 5rem;
+    font-size: 1.2rem;
+    color: black;
+    line-height: 1.8;
+    gap: 20px;
+    flex: 1; /* Takes remaining space */
+}
+
+.story-intro img {
+    width: 70%;
+    height: 70%;
+    object-fit: cover; /* Keeps image neat */
+    border-radius: 12px;
+    position: relative;
+    left: 15%;
 }
 
 /* Sermons Page Styles */

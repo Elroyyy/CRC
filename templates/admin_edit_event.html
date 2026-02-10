@@ -261,12 +261,12 @@
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Event Title</label>
-                    <input type="text" id="title" name="title" value="{{ event.title }}" required>
+                    <input type="text" id="title" name="title" value="{{ event['title'] }}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="event_date">Event Date</label>
-                    <input type="date" id="event_date" name="event_date" value="{{ event.event_date.strftime('%Y-%m-%d') }}" required>
+                    <input type="date" id="event_date" name="event_date" value="{{ event['event_date'] }}" required>
                 </div>
 
                 <div class="form-group">
@@ -275,7 +275,7 @@
                     {% if event.image_path %}
                         <div class="current-image">
                             <p><strong>Current Image:</strong></p>
-                            <img src="{{ url_for('static', filename=event.image_path) }}" alt="Current event image">
+                            <img src="{{ event['image_path'] }}" alt="Current event image">
                         </div>
                     {% endif %}
 
@@ -284,7 +284,7 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
                         <div class="upload-text">
-                            {% if event.image_path %}
+                            {% if event['image_path'] %}
                                 Click to upload new image or drag and drop
                             {% else %}
                                 Click to upload image or drag and drop

@@ -181,7 +181,7 @@
                     <div>
                         <strong>{{ event.title }}</strong>
                         <br>
-                        <small>{{ event.event_date.strftime('%B %d, %Y') }}</small>
+                        <small>{{ event[event_date] | dateformat }}</small>
                     </div>
                     <a href="{{ url_for('admin_edit_event', event_id=event.id) }}">Edit</a>
                 </div>
@@ -197,7 +197,7 @@
                         <div>
                             <strong>{{ rental.name }}</strong> - {{ rental.space_requested }}
                             <br>
-                            <small>{{ rental.event_type }} on {{ rental.event_date.strftime('%B %d, %Y') }} ({{ rental.guest_count }} guests)</small>
+                            <small>{{ rental.event_type }} on {{ rental[event_date] | dateformat }} ({{ rental.guest_count }} guests)</small>
                         </div>
                     </div>
                 {% endfor %}
@@ -214,7 +214,7 @@
                     <div>
                         <strong>{{ inquiry.name }}</strong> - {{ inquiry.email }}
                         <br>
-                        <small>{{ inquiry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</small>
+                        <small>{{ inquiry[created_at] | dateformat }}</small>
                     </div>
                 </div>
             {% endfor %}
