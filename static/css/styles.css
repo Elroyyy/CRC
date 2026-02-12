@@ -302,7 +302,7 @@ a:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #24331f;
+    background: white;
     z-index: 999;
     opacity: 0;
     visibility: hidden;
@@ -346,17 +346,48 @@ a:focus {
 }
 
 /* Hero Section */
+/*.hero {*/
+/*    height: 100vh;*/
+/*    background: url('/static/images/COVER.jpg') center/cover no-repeat;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    text-align: center;*/
+/*    color: var(--white);*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*!* Mobile Responsive *!*/
+/*@media (max-width: 768px) {*/
+/*    .hero {*/
+/*        height: 80vh; !* Reduce height for mobile *!*/
+/*        background-position: center top; !* Focus important area *!*/
+/*        background-size: cover;*/
+/*    }*/
+/*}*/
+
 .hero {
-    height: 100vh;
-    background: url('/static/images/COVER.jpg') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--white);
     position: relative;
+    height: 100vh;
     overflow: hidden;
 }
+
+.hero-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: 80vh;
+    }
+}
+
 
 .hero::before {
     content: '';
