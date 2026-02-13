@@ -388,7 +388,6 @@ a:focus {
     }
 }
 
-
 .hero::before {
     content: '';
     position: absolute;
