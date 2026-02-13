@@ -3,16 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DCC</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <title>Dehiwala Community Church (DCC)</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"
+          href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="apple-touch-icon"
+          href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <!-- SEO / Preview -->
+    <meta property="og:title" content="Dehiwala Community Church">
+    <meta property="og:description" content="A Christ-centered community built on Worship, Word, and Service.">
+    <meta property="og:image"
+          content="https://dehiwalacommunitychurch.lk/static/images/icon.png">
+
+    <!-- Fonts & Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+
 <body>
     <!-- Preloader -->
     <div class="preloader" id="preloader" role="status" aria-live="polite">
