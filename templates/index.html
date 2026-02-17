@@ -33,16 +33,16 @@
 
 <body>
     <!-- Preloader -->
-    <div class="preloader" id="preloader" role="status" aria-live="polite">
-        <div class="preloader-content">
-            <div class="preloader-logo">
-                <img src="{{ url_for('static', filename='images/Picture2.png') }}">
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="preloader" id="preloader" role="status" aria-live="polite">-->
+<!--        <div class="preloader-content">-->
+<!--            <div class="preloader-logo">-->
+<!--                <img src="{{ url_for('static', filename='images/Picture2.png') }}">-->
+<!--            </div>-->
+<!--            <div class="progress-bar">-->
+<!--                <div class="progress-fill" id="progress-fill"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <!-- Success Message Overlay -->
     <div class="success-message" id="success-message" role="alert" aria-live="assertive">
@@ -53,7 +53,7 @@
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-    <a href="/" class="logo" aria-label="Christian Revival Crusade">
+    <a href="/" class="logo" aria-label="DCC">
         <img src="{{ url_for('static', filename='images/Picture1.png') }}" alt="Church Logo" loading="lazy">
     </a>
     <button class="hamburger" aria-label="Toggle menu">
@@ -63,13 +63,13 @@
     </button>
     <div class="sidebar" id="sidebar">
         <ul class="nav-links">
-            <li><a href="#" onclick="showPage('home')">Home</a></li>
-            <li><a href="#about" onclick="return showPage('about')">About Us</a></li>
+            <li><a href="#" onclick="return showPage('home')">Home</a></li>
+            <li><a href="#" onclick="return showPage('about')">About Us</a></li>
 <!--            <li><a href="#" onclick="showPage('sermons')">Sermons</a></li>-->
 <!--            <li><a href="#" onclick="showPage('ministries')">Ministries</a></li>-->
-            <li><a href="#events" onclick="showPage('events')">Events</a></li>
-            <li><a href="#space-rentals" onclick="showPage('space-rentals')">Space Rental</a></li>
-            <li><a href="#" onclick="scrollToContact()">Contact</a></li>
+            <li><a href="#" onclick="return showPage('events')">Events</a></li>
+            <li><a href="#" onclick="return showPage('space-rentals')">Space Rental</a></li>
+            <li><a href="#" onclick="return scrollToContact()">Contact</a></li>
         </ul>
     </div>
 </nav>

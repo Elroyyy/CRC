@@ -1,39 +1,53 @@
-// Preloader
+// // Preloader
+// window.addEventListener('load', () => {
+//     const preloader = document.getElementById('preloader');
+//     const progressFill = document.getElementById('progress-fill');
+//
+//     let progress = 0;
+//     const interval = setInterval(() => {
+//         progress += Math.random() * 30;
+//         if (progress >= 100) {
+//             progress = 100;
+//             clearInterval(interval);
+//             setTimeout(() => {
+//                 preloader.classList.add('hidden');
+//                 initializeAnimations();
+//             }, 500);
+//         }
+//         progressFill.style.width = `${progress}%`;
+//     }, 100);
+//
+//     // Fallback: Hide preloader after 5 seconds
+//     setTimeout(hidePreloader, 5000);
+//
+//     function hidePreloader() {
+//         clearInterval(interval);
+//         preloader.classList.add('hidden');
+//         console.log('Preloader hidden');
+//         initializeAnimations();
+//         // Ensure home page is visible
+//         const homePage = document.getElementById('home');
+//         if (homePage) {
+//             homePage.classList.add('active');
+//             homePage.style.opacity = '1';
+//             homePage.style.transform = 'translateY(0)';
+//         }
+//     }
+// });
+
 window.addEventListener('load', () => {
-    const preloader = document.getElementById('preloader');
-    const progressFill = document.getElementById('progress-fill');
+    // Start animations directly
+    initializeAnimations();
 
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += Math.random() * 30;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-            setTimeout(() => {
-                preloader.classList.add('hidden');
-                initializeAnimations();
-            }, 500);
-        }
-        progressFill.style.width = `${progress}%`;
-    }, 100);
-
-    // Fallback: Hide preloader after 5 seconds
-    setTimeout(hidePreloader, 5000);
-
-    function hidePreloader() {
-        clearInterval(interval);
-        preloader.classList.add('hidden');
-        console.log('Preloader hidden');
-        initializeAnimations();
-        // Ensure home page is visible
-        const homePage = document.getElementById('home');
-        if (homePage) {
-            homePage.classList.add('active');
-            homePage.style.opacity = '1';
-            homePage.style.transform = 'translateY(0)';
-        }
+    // Ensure home page is visible
+    const homePage = document.getElementById('home');
+    if (homePage) {
+        homePage.classList.add('active');
+        homePage.style.opacity = '1';
+        homePage.style.transform = 'translateY(0)';
     }
 });
+
 
 // // Create floating particles (optimized for performance)
 // function createParticles() {
@@ -98,17 +112,23 @@ function initializeNavbarAnimation() {
 
 
 // Page navigation with animation
-function showPage(pageId) {
-    // Prevent default behavior
-    history.pushState(null, '', '#' + pageId);
+function showPage(pageId, updateURL = true) {
+
+    // Update URL without #
+    if (updateURL) {
+        history.pushState({ page: pageId }, '', '/' + pageId);
+    }
 
     const pages = document.querySelectorAll('.page');
+
     pages.forEach(page => {
         page.classList.remove('active');
         page.style.display = 'none';
     });
 
     const currentPage = document.getElementById(pageId);
+    if (!currentPage) return;
+
     currentPage.classList.add('active');
     currentPage.style.display = 'block';
 
@@ -116,7 +136,6 @@ function showPage(pageId) {
     currentPage.style.opacity = '0';
     currentPage.style.transform = 'translateY(20px)';
 
-    // Trigger reflow to start transition
     requestAnimationFrame(() => {
         currentPage.style.transition = 'opacity 0.3s ease, transform 0.5s ease';
         currentPage.style.opacity = '1';
@@ -127,17 +146,30 @@ function showPage(pageId) {
     return false;
 }
 
+
 // Handle browser back/forward buttons
-window.addEventListener('popstate', function(event) {
-    const pageId = window.location.hash.slice(1) || 'home';
-    showPage(pageId);
+window.addEventListener('popstate', function (event) {
+
+    const pageId = event.state?.page || 'home';
+    showPage(pageId, false);
+
 });
 
+
 // Handle initial page load
-document.addEventListener('DOMContentLoaded', function() {
-    const pageId = window.location.hash.slice(1) || 'home';
-    showPage(pageId);
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Get page name from URL path
+    let path = window.location.pathname.replace('/', '');
+
+    if (path === '') {
+        path = 'home';
+    }
+
+    showPage(path, false);
+
 });
+
 
 // Smooth scroll to contact
 function scrollToContact() {
@@ -145,6 +177,8 @@ function scrollToContact() {
     setTimeout(() => {
         document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });
     }, 500);
+
+    return false;
 }
 
 // Form submissions
