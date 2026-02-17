@@ -102,7 +102,8 @@ def _delete_storage_file(public_url):
 # ── Public routes ────────────────────────────────────────────────────────────
 
 @app.route('/')
-def home():
+@app.route('/<page_id>')
+def home(page_id='home'):
     return render_template('index.html')
 
 

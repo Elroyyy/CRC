@@ -159,12 +159,13 @@ window.addEventListener('popstate', function (event) {
 // Handle initial page load
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Get page name from URL path
-    let path = window.location.pathname.replace('/', '');
-
-    if (path === '') {
-        path = 'home';
+    if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
     }
+
+    let path = window.location.pathname.split('/').filter(Boolean)[0];
+
+    if (!path) path = 'home';
 
     showPage(path, false);
 
@@ -732,4 +733,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Uncomment when API is ready
     // loadSermons();
 });
-
