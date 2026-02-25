@@ -897,7 +897,7 @@ a:focus {
 .about-content {
     max-width: 900px;
     margin: 0 auto;
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .about-content h1 {
@@ -956,7 +956,7 @@ a:focus {
 
 /* Sermons Page Styles */
 .sermons-page {
-    padding: 8rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -1294,7 +1294,7 @@ a:focus {
 .ministries-content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .ministries-content h1 {
@@ -1411,7 +1411,7 @@ a:focus {
 
 /* Events Page Styles */
 .events-page {
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .events-page h1 {
@@ -1460,7 +1460,7 @@ a:focus {
 
 /* Space Rental Styles */
 .space-rental-page {
-    padding: 8rem 1rem 4rem;
+    padding: 10rem 1rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
 }
