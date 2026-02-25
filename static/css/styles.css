@@ -245,7 +245,7 @@ a:focus {
     right: -100%;
     width: 250px;
     height: 100%;
-    background: transparent;
+    background: white;
     transition: right 0.3s ease;
     z-index: 10000;
     padding-top: 4rem;
@@ -321,7 +321,7 @@ a:focus {
         height: auto;
         padding-top: 0;
         box-shadow: none;
-        background: transparent;
+        background: white;
     }
 
     .nav-links {
