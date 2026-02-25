@@ -346,9 +346,17 @@ function displayEvents(events, containerId) {
             day: 'numeric'
         });
 
-        const imageHtml = event.image_path
-            ? `<img src="/static/${event.image_path}" alt="${event.title}" loading="lazy" style="animation-delay: ${index * 0.2}s">`
-            : `<img src="{{ url_for('static', filename='images/event.jpg') }}" alt="${event.title}" loading="lazy" style="animation-delay: ${index * 0.2}s">`;
+        const imageSrc = event.image_path
+    ? (event.image_path.startsWith('http')
+        ? event.image_path              // Supabase URL
+        : `/static/${event.image_path}` // Old local path
+      )
+    : '/static/images/event.jpg';
+
+const imageHtml = `
+    <img src="${imageSrc}" alt="${event.title}" loading="lazy"
+         style="animation-delay: ${index * 0.2}s">
+`;
 
         return `
             <div class="event-card scale-in delay-${index + 1}" style="animation-delay: ${index * 0.2}s">
