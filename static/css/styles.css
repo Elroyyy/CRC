@@ -197,7 +197,7 @@ a:focus {
 }
 
 .navbar.scrolled {
-    background: transparent;
+    background: white;
     padding: 0.5rem 2rem;
 }
 
@@ -895,7 +895,7 @@ a:focus {
 
 /* About Page Styles */
 .about-content {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 6rem 2rem 4rem;
 }
