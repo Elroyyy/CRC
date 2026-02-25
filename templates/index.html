@@ -79,8 +79,18 @@
     <div id="home" class="page active" role="main">
             <!-- Hero Section -->
             <section class="hero">
-                <img src="/static/images/COVER.jpg" class="hero-bg" alt="Hero Background">
-<!--                <div class="particles" id="particles" aria-hidden="true"></div>-->
+                <picture>
+                    <!-- Mobile image -->
+                    <source
+                      media="(max-width: 768px)"
+                      srcset="/static/images/COVER-MOBILE.jpg">
+
+                    <!-- Default desktop image -->
+                    <img
+                      src="/static/images/COVER.jpg"
+                      class="hero-bg"
+                      alt="Hero Background">
+                  </picture>
                 <div class="hero-content">
 <!--                    <h1 class="fade-in">Dehiwala Community Church</h1>-->
 <!--                    <p class="fade-in delay-1">Welcome to our Church</p>-->
