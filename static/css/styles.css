@@ -946,12 +946,12 @@ a:focus {
 }
 
 .story-intro img {
-    width: 70%;
+    width: 100%;
     height: 70%;
     object-fit: cover; /* Keeps image neat */
     border-radius: 12px;
     position: relative;
-    left: 15%;
+    left: 8%;
 }
 
 /* Sermons Page Styles */
