@@ -202,7 +202,7 @@ a:focus {
 }
 
 .logo img {
-    height: 60px;
+    height: 120px;
     width: auto;
     transition: height 0.3s ease;
 }
@@ -901,7 +901,7 @@ a:focus {
 .about-content {
     max-width: 900px;
     margin: 0 auto;
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .about-content h1 {
@@ -920,7 +920,7 @@ a:focus {
    text-align: justify;
     max-width: 1200px;
     margin: 0 auto 5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: black;
     line-height: 1.8;
     gap: 20px;
@@ -942,7 +942,7 @@ a:focus {
     text-align: justify;
     max-width: 1200px;
     margin: 0 auto 5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: black;
     line-height: 1.8;
     gap: 20px;
@@ -950,17 +950,17 @@ a:focus {
 }
 
 .story-intro img {
-    width: 70%;
+    width: 100%;
     height: 70%;
     object-fit: cover; /* Keeps image neat */
     border-radius: 12px;
     position: relative;
-    left: 15%;
+    left: 8%;
 }
 
 /* Sermons Page Styles */
 .sermons-page {
-    padding: 8rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -1298,7 +1298,7 @@ a:focus {
 .ministries-content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .ministries-content h1 {
@@ -1415,7 +1415,7 @@ a:focus {
 
 /* Events Page Styles */
 .events-page {
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .events-page h1 {
@@ -1464,7 +1464,7 @@ a:focus {
 
 /* Space Rental Styles */
 .space-rental-page {
-    padding: 8rem 1rem 4rem;
+    padding: 10rem 1rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -1782,9 +1782,10 @@ a:focus {
 .footer-content {
     max-width: 1400px;
     margin: 0 auto;
+    margin-left: 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: 4rem;
 }
 
 .footer-section h3 {
