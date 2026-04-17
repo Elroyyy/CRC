@@ -95,14 +95,17 @@ function initializeScrollAnimations() {
 function initializeNavbarAnimation() {
     const navbar = document.getElementById('navbar');
 
+    // function handleScroll() {
+    //     if (window.innerWidth > 768) {
+    //         navbar.classList.toggle('scrolled', window.scrollY > 100);
+    //     } else {
+    //         navbar.classList.remove('scrolled');
+    //     }
+    // }
     function handleScroll() {
-        if (window.innerWidth > 768) {
-            navbar.classList.toggle('scrolled', window.scrollY > 100);
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+        // Enable scrolled state for both mobile and desktop
+        navbar.classList.toggle('scrolled', window.scrollY > 100);
     }
-
     // Listen to scroll
     window.addEventListener('scroll', handleScroll);
 
