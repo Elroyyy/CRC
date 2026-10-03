@@ -211,9 +211,16 @@ async function submitInquiry(event) {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
-        showSuccessMessage('Thank you for your inquiry! We will contact you soon.');
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.error || 'The inquiry could not be saved.');
+        }
+
+        showSuccessMessage(
+            result.message,
+            result.email_sent === false ? 'warning' : 'success'
+        );
 
         form.querySelectorAll('input, textarea').forEach((input, index) => {
             setTimeout(() => {
@@ -228,7 +235,10 @@ async function submitInquiry(event) {
         });
     } catch (error) {
         console.error('Error:', error);
-        showSuccessMessage('Sorry, there was an error sending your message. Please try again.', 'error');
+        showSuccessMessage(
+            error.message || 'Sorry, your inquiry could not be saved. Please try again.',
+            'error'
+        );
     } finally {
         setTimeout(() => {
             submitBtn.textContent = originalText;
@@ -272,9 +282,16 @@ async function submitRentalRequest(event) {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
-        showSuccessMessage('Thank you for your rental request! We will contact you within 24-48 hours.');
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.error || 'The rental request could not be saved.');
+        }
+
+        showSuccessMessage(
+            result.message,
+            result.email_sent === false ? 'warning' : 'success'
+        );
 
         form.querySelectorAll('input, textarea, select').forEach((input, index) => {
             setTimeout(() => {
@@ -293,7 +310,10 @@ async function submitRentalRequest(event) {
         });
     } catch (error) {
         console.error('Error:', error);
-        showSuccessMessage('Sorry, there was an error sending your request. Please try again.', 'error');
+        showSuccessMessage(
+            error.message || 'Sorry, your rental request could not be saved. Please try again.',
+            'error'
+        );
     } finally {
         setTimeout(() => {
             submitBtn.textContent = originalText;
@@ -310,9 +330,18 @@ function showSuccessMessage(message, type = 'success') {
     const icon = successDiv.querySelector('i');
     const heading = successDiv.querySelector('h3');
 
-    icon.className = type === 'error' ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle';
-    icon.style.color = type === 'error' ? '#dc3545' : '#28a745';
-    heading.textContent = type === 'error' ? 'Error' : 'Success!';
+    const isError = type === 'error';
+    const isWarning = type === 'warning';
+
+    icon.className = isError || isWarning
+        ? 'fas fa-exclamation-triangle'
+        : 'fas fa-check-circle';
+    icon.style.color = isError ? '#dc3545' : isWarning ? '#b7791f' : '#28a745';
+    heading.textContent = isError
+        ? 'Submission failed'
+        : isWarning
+          ? 'Request received'
+          : 'Success!';
     messageText.textContent = message;
 
     successDiv.classList.add('show');
@@ -349,15 +378,12 @@ function displayEvents(events, containerId) {
             day: 'numeric'
         });
 
-        const imageSrc = event.image_path
-    ? (event.image_path.startsWith('http')
-        ? event.image_path              // Supabase URL
-        : `/static/${event.image_path}` // Old local path
-      )
-    : '/static/images/event.jpg';
+        const imageSrc = safeImageSource(event.image_path);
+        const eventTitle = escapeHTML(event.title || 'Church event');
+        const eventDescription = escapeHTML(event.description || '');
 
 const imageHtml = `
-    <img src="${imageSrc}" alt="${event.title}" loading="lazy"
+    <img src="${escapeHTML(imageSrc)}" alt="${eventTitle}" loading="lazy"
          style="animation-delay: ${index * 0.2}s">
 `;
 
@@ -366,8 +392,8 @@ const imageHtml = `
                 ${imageHtml}
                 <div class="event-content">
                     <div class="event-date">${formattedDate}</div>
-                    <h3 class="event-title">${event.title}</h3>
-                    <p>${event.description}</p>
+                    <h3 class="event-title">${eventTitle}</h3>
+                    <p>${eventDescription}</p>
                 </div>
             </div>
         `;
@@ -385,6 +411,35 @@ const imageHtml = `
             observer.observe(el);
         });
     }, 100);
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>'"]/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+    })[character]);
+}
+
+function safeImageSource(value) {
+    const fallback = '/static/images/event.jpg';
+    if (!value || typeof value !== 'string') return fallback;
+
+    try {
+        const url = new URL(
+            value.startsWith('http') ? value : `/static/${value.replace(/^\/+/, '')}`,
+            window.location.origin
+        );
+        if (url.protocol === 'https:' || url.origin === window.location.origin) {
+            return url.href;
+        }
+    } catch (error) {
+        console.warn('Invalid event image URL', error);
+    }
+
+    return fallback;
 }
 
 function showDefaultEvents() {

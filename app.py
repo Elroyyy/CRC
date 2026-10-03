@@ -3,7 +3,11 @@ from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from supabase import create_client, Client
 from datetime import datetime
+from functools import wraps
+import hmac
 import os
+import re
+import secrets
 import uuid
 import requests
 
@@ -19,8 +23,14 @@ BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 
 # ── Flask app ────────────────────────────────────────────────────────────────
 app = Flask(__name__)
-app.config['SECRET_KEY']          = os.getenv('SECRET_KEY', 'change-me-in-production')
+app.config['SECRET_KEY']          = os.getenv('SECRET_KEY')
 app.config['MAX_CONTENT_LENGTH']  = 16 * 1024 * 1024   # 16 MB
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = os.getenv('FLASK_ENV') == 'production'
+
+if not app.config['SECRET_KEY']:
+    raise RuntimeError('SECRET_KEY must be configured')
 
 # ── Jinja2 filters ───────────────────────────────────────────────────────────
 @app.template_filter('datetimeformat')
@@ -53,12 +63,122 @@ RECIPIENT_EMAIL = [
     {"email": "elroypushparajah@gmail.com"},
     {"email": "melcky.zedek@gmail.com"},
 ]
+EMAIL_PATTERN = re.compile(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def required_text(data, field, max_length):
+    value = data.get(field)
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f'{field.replace("_", " ").title()} is required')
+
+    value = value.strip()
+    if len(value) > max_length:
+        raise ValueError(
+            f'{field.replace("_", " ").title()} must be {max_length} characters or fewer'
+        )
+    return value
+
+
+def validated_email(data):
+    email = required_text(data, 'email', 254)
+    if not EMAIL_PATTERN.fullmatch(email):
+        raise ValueError('A valid email address is required')
+    return email
+
+
+def admin_required(view):
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        if 'admin_id' not in session:
+            return redirect(url_for('admin_login'))
+        return view(*args, **kwargs)
+
+    return wrapped
+
+
+def csrf_token():
+    token = session.get('_csrf_token')
+    if not token:
+        token = secrets.token_urlsafe(32)
+        session['_csrf_token'] = token
+    return token
+
+
+@app.context_processor
+def inject_csrf_token():
+    return {'csrf_token': csrf_token}
+
+
+@app.before_request
+def protect_admin_posts():
+    if request.method != 'POST' or not request.path.startswith('/admin'):
+        return None
+
+    submitted = request.form.get('_csrf_token') or request.headers.get('X-CSRF-Token')
+    expected = session.get('_csrf_token', '')
+    if not submitted or not expected or not hmac.compare_digest(submitted, expected):
+        return jsonify({'error': 'Invalid or expired form token'}), 400
+
+    return None
+
+
+@app.after_request
+def add_security_headers(response):
+    response.headers.setdefault('X-Content-Type-Options', 'nosniff')
+    response.headers.setdefault('X-Frame-Options', 'SAMEORIGIN')
+    response.headers.setdefault('Referrer-Policy', 'strict-origin-when-cross-origin')
+    response.headers.setdefault(
+        'Permissions-Policy',
+        'camera=(), microphone=(), geolocation=()',
+    )
+    if request.is_secure:
+        response.headers.setdefault(
+            'Strict-Transport-Security',
+            'max-age=31536000; includeSubDomains',
+        )
+    return response
+
+
+def send_brevo_email(sender_name, subject, body):
+    """Send a notification and return whether Brevo accepted it."""
+    if not BREVO_API_KEY:
+        print("Brevo notification skipped: BREVO_API_KEY is not configured")
+        return False
+
+    try:
+        response = requests.post(
+            "https://api.brevo.com/v3/smtp/email",
+            headers={
+                "accept": "application/json",
+                "api-key": BREVO_API_KEY,
+                "content-type": "application/json",
+            },
+            json={
+                "sender": {"name": sender_name, "email": SENDER_EMAIL},
+                "to": RECIPIENT_EMAIL,
+                "subject": subject,
+                "textContent": body,
+            },
+            timeout=15,
+        )
+    except requests.RequestException as error:
+        print(f"Brevo notification request failed: {error}")
+        return False
+
+    if response.status_code not in (200, 201, 202):
+        print(
+            "Brevo notification rejected "
+            f"with HTTP status {response.status_code}: {response.text[:500]}"
+        )
+        return False
+
+    return True
 
 
 def save_uploaded_file(file, folder='events'):
@@ -125,54 +245,72 @@ def get_events():
 @app.route('/submit_inquiry', methods=['POST'])
 def submit_inquiry():
     try:
-        data = request.get_json()
+        data = request.get_json(silent=True)
+        if not isinstance(data, dict):
+            return jsonify({'success': False, 'error': 'Invalid request'}), 400
+
+        name = required_text(data, 'name', 120)
+        phone = required_text(data, 'phone', 40)
+        email = validated_email(data)
+        note = required_text(data, 'note', 3000)
 
         supabase.table('inquiries').insert({
-            'name':  data['name'],
-            'phone': data['phone'],
-            'email': data['email'],
-            'note':  data['note'],
+            'name': name,
+            'phone': phone,
+            'email': email,
+            'note': note,
         }).execute()
 
         # Email via Brevo (unchanged)
-        subject = f"DDC: New Inquiry from {data['name']}"
+        subject = f"DCC: New Inquiry from {name}"
         body    = (
             f"📩 New Inquiry Received\n\n"
-            f"Name:  {data['name']}\n"
-            f"Phone: {data['phone']}\n"
-            f"Email: {data['email']}\n"
-            f"Note:  {data['note']}"
+            f"Name:  {name}\n"
+            f"Phone: {phone}\n"
+            f"Email: {email}\n"
+            f"Note:  {note}"
         )
 
-        response = requests.post(
-            "https://api.brevo.com/v3/smtp/email",
-            headers={
-                "accept":        "application/json",
-                "api-key":       BREVO_API_KEY,
-                "content-type":  "application/json",
-            },
-            json={
-                "sender":      {"name": "Inquiry from CRC Application", "email": SENDER_EMAIL},
-                "to":          RECIPIENT_EMAIL,
-                "subject":     subject,
-                "textContent": body,
-            },
+        email_sent = send_brevo_email(
+            "Inquiry from CRC Application",
+            subject,
+            body,
         )
-        if response.status_code not in (200, 201, 202):
-            print("❌ Brevo API Error:", response.text)
 
-        return jsonify({'success': True, 'message': 'Inquiry saved and email sent!'})
+        if not email_sent:
+            return jsonify({
+                'success': True,
+                'saved': True,
+                'email_sent': False,
+                'message': (
+                    'Your inquiry was received and saved. The email notification '
+                    'could not be sent, but the church team can still view your '
+                    'inquiry in the admin panel.'
+                ),
+            }), 202
 
+        return jsonify({
+            'success': True,
+            'saved': True,
+            'email_sent': True,
+            'message': 'Your inquiry was received and the church team was notified.',
+        })
+
+    except ValueError as error:
+        return jsonify({'success': False, 'error': str(error)}), 400
     except Exception as e:
         print(f"Error submitting inquiry: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({
+            'success': False,
+            'error': 'The inquiry could not be saved. Please try again.',
+        }), 500
 
 
 @app.route('/api/space-rental', methods=['POST'])
 def submit_space_rental():
     try:
-        data = request.get_json()
-        if not data:
+        data = request.get_json(silent=True)
+        if not isinstance(data, dict):
             return jsonify({'error': 'No data provided'}), 400
 
         required_fields = [
@@ -183,59 +321,80 @@ def submit_space_rental():
             if not data.get(field):
                 return jsonify({'error': f'Missing required field: {field}'}), 400
 
+        name = required_text(data, 'name', 120)
+        phone = required_text(data, 'phone', 40)
+        email = validated_email(data)
+        event_type = required_text(data, 'event_type', 120)
+        space_requested = required_text(data, 'space_requested', 120)
+        additional_needs = str(data.get('additional_needs', '')).strip()[:1000]
+        message = str(data.get('message', '')).strip()[:3000]
+        guest_count = int(data['guest_count'])
+        if guest_count < 1 or guest_count > 5000:
+            raise ValueError('Guest count must be between 1 and 5000')
+        datetime.strptime(data['event_date'], '%Y-%m-%d')
+        datetime.strptime(data['start_time'], '%H:%M')
+        datetime.strptime(data['end_time'], '%H:%M')
+
         supabase.table('space_rentals').insert({
-            'name':             data['name'],
-            'phone':            data['phone'],
-            'email':            data['email'],
-            'event_type':       data['event_type'],
-            'space_requested':  data['space_requested'],
+            'name':             name,
+            'phone':            phone,
+            'email':            email,
+            'event_type':       event_type,
+            'space_requested':  space_requested,
             'event_date':       data['event_date'],          # expects 'YYYY-MM-DD' string
             'start_time':       data['start_time'],
             'end_time':         data['end_time'],
-            'guest_count':      int(data['guest_count']),
-            'additional_needs': data.get('additional_needs', ''),
-            'message':          data.get('message', ''),
+            'guest_count':      guest_count,
+            'additional_needs': additional_needs,
+            'message':          message,
         }).execute()
 
         # Email via Brevo (unchanged)
-        subject = f"DCC: New Space Rental Request from {data['name']}"
+        subject = f"DCC: New Space Rental Request from {name}"
         body    = (
             f"📌 New Space Rental Request\n\n"
-            f"Name:             {data['name']}\n"
-            f"Phone:            {data['phone']}\n"
-            f"Email:            {data['email']}\n"
-            f"Event Type:       {data['event_type']}\n"
-            f"Space Requested:  {data['space_requested']}\n"
+            f"Name:             {name}\n"
+            f"Phone:            {phone}\n"
+            f"Email:            {email}\n"
+            f"Event Type:       {event_type}\n"
+            f"Space Requested:  {space_requested}\n"
             f"Event Date:       {data['event_date']}\n"
             f"Start Time:       {data['start_time']}\n"
             f"End Time:         {data['end_time']}\n"
-            f"Guest Count:      {data['guest_count']}\n"
-            f"Additional Needs: {data.get('additional_needs', 'None')}\n"
-            f"Message:          {data.get('message', 'None')}"
+            f"Guest Count:      {guest_count}\n"
+            f"Additional Needs: {additional_needs or 'None'}\n"
+            f"Message:          {message or 'None'}"
         )
 
-        response = requests.post(
-            "https://api.brevo.com/v3/smtp/email",
-            headers={
-                "accept":        "application/json",
-                "api-key":       BREVO_API_KEY,
-                "content-type":  "application/json",
-            },
-            json={
-                "sender":      {"name": "Space Rental Request from CRC", "email": SENDER_EMAIL},
-                "to":          RECIPIENT_EMAIL,
-                "subject":     subject,
-                "textContent": body,
-            },
+        email_sent = send_brevo_email(
+            "Space Rental Request from CRC",
+            subject,
+            body,
         )
-        if response.status_code not in (200, 201, 202):
-            print("❌ Brevo API Error:", response.text)
 
-        return jsonify({'message': 'Space rental request submitted successfully'}), 201
+        if not email_sent:
+            return jsonify({
+                'success': True,
+                'saved': True,
+                'email_sent': False,
+                'message': (
+                    'Your rental request was received and saved. The email '
+                    'notification could not be sent, but the church team can '
+                    'still view your request in the admin panel.'
+                ),
+            }), 202
 
-    except ValueError as e:
-        print(f"Value error in space rental: {e}")
-        return jsonify({'error': 'Invalid date format or guest count'}), 400
+        return jsonify({
+            'success': True,
+            'saved': True,
+            'email_sent': True,
+            'message': (
+                'Your rental request was received and the church team was notified.'
+            ),
+        }), 201
+
+    except ValueError as error:
+        return jsonify({'success': False, 'error': str(error)}), 400
     except Exception as e:
         print(f"Error submitting space rental: {e}")
         return jsonify({'error': 'Failed to submit space rental request'}), 500
@@ -294,9 +453,8 @@ def admin_logout():
 # ── Admin: dashboard ─────────────────────────────────────────────────────────
 
 @app.route('/admin/dashboard')
+@admin_required
 def admin_dashboard():
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     try:
         events    = supabase.table('events').select('*').order('event_date', desc=True).execute().data
         inquiries = supabase.table('inquiries').select('*').order('created_at', desc=True).limit(10).execute().data
@@ -313,9 +471,8 @@ def admin_dashboard():
 # ── Admin: events ────────────────────────────────────────────────────────────
 
 @app.route('/admin/events')
+@admin_required
 def admin_events():
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     try:
         events = supabase.table('events').select('*').order('event_date', desc=True).execute().data
         return render_template('admin_events.html', events=events)
@@ -326,16 +483,14 @@ def admin_events():
 
 
 @app.route('/admin/events/add')
+@admin_required
 def admin_add_event():
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     return render_template('admin_add_event.html')
 
 
 @app.route('/admin/events/add', methods=['POST'])
+@admin_required
 def admin_add_event_post():
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     try:
         title          = request.form.get('title')
         description    = request.form.get('description')
@@ -374,10 +529,8 @@ def admin_add_event_post():
 
 
 @app.route('/admin/events/edit/<int:event_id>')
+@admin_required
 def admin_edit_event(event_id):
-    if 'admin_id' not in session:
-        flash('Please log in to access admin features', 'error')
-        return redirect(url_for('admin_login'))
     try:
         result = (
             supabase.table('events')
@@ -399,9 +552,8 @@ def admin_edit_event(event_id):
 
 
 @app.route('/admin/events/edit/<int:event_id>', methods=['POST'])
+@admin_required
 def admin_edit_event_post(event_id):
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     try:
         # Fetch current event so we can delete old image if needed
         result = (
@@ -455,10 +607,9 @@ def admin_edit_event_post(event_id):
         return redirect(url_for('admin_edit_event', event_id=event_id))
 
 
-@app.route('/admin/events/delete/<int:event_id>')
+@app.route('/admin/events/delete/<int:event_id>', methods=['POST'])
+@admin_required
 def admin_delete_event(event_id):
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     try:
         # Fetch event to get image URL before deleting
         result = (
@@ -486,13 +637,13 @@ def admin_delete_event(event_id):
 # ── Admin: sermons (stub — unchanged) ────────────────────────────────────────
 
 @app.route('/admin/sermons')
+@admin_required
 def admin_sermons():
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     return render_template('admin_sermons.html')
 
 
 @app.route('/admin/sermons/add', methods=['GET', 'POST'])
+@admin_required
 def admin_add_sermon():
     if request.method == 'POST':
         pass
@@ -500,13 +651,15 @@ def admin_add_sermon():
 
 
 @app.route('/admin/sermons/edit/<int:sermon_id>', methods=['GET', 'POST'])
+@admin_required
 def admin_edit_sermon(sermon_id):
     if request.method == 'POST':
         pass
     return render_template('admin_edit_sermon.html')
 
 
-@app.route('/admin/sermons/delete/<int:sermon_id>', methods=['POST', 'GET'])
+@app.route('/admin/sermons/delete/<int:sermon_id>', methods=['POST'])
+@admin_required
 def admin_delete_sermon(sermon_id):
     flash('Sermon deleted successfully', 'success')
     return redirect(url_for('admin_sermons'))
@@ -515,9 +668,8 @@ def admin_delete_sermon(sermon_id):
 # ── Admin: space rentals ─────────────────────────────────────────────────────
 
 @app.route('/admin/space-rentals')
+@admin_required
 def admin_space_rentals():
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     try:
         rentals = (
             supabase.table('space_rentals')
@@ -536,9 +688,8 @@ def admin_space_rentals():
 # ── Admin: inquiries ─────────────────────────────────────────────────────────
 
 @app.route('/admin_inquiries')
+@admin_required
 def admin_inquiries():
-    if 'admin_id' not in session:
-        return redirect(url_for('admin_login'))
     inquiries = (
         supabase.table('inquiries')
         .select('*')
@@ -554,29 +705,17 @@ def admin_inquiries():
 @app.route('/api/test')
 def test_database():
     try:
-        event_count   = len(supabase.table('events').select('id').execute().data)
-        inquiry_count = len(supabase.table('inquiries').select('id').execute().data)
-        rental_count  = len(supabase.table('space_rentals').select('id').execute().data)
-        admin_count   = len(supabase.table('admins').select('id').execute().data)
-
-        return jsonify({
-            'status':  'success',
-            'message': 'Supabase connection working',
-            'counts': {
-                'admins':        admin_count,
-                'events':        event_count,
-                'inquiries':     inquiry_count,
-                'space_rentals': rental_count,
-            },
-        })
+        supabase.table('events').select('id').limit(1).execute()
+        return jsonify({'status': 'ok'})
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        print(f"Health check failed: {e}")
+        return jsonify({'status': 'unavailable'}), 503
 
 
 # ── Entry point ──────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=os.getenv('FLASK_DEBUG', '').lower() == 'true')
 
 
 
