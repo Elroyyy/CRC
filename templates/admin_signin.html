@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign in · DCC Admin</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='js/admin.js') }}"
+      defer
+    ></script>
+  </head>
+  <body class="login-shell">
+    <main class="login-card">
+      <a class="login-brand" href="{{ url_for('home') }}">
+        <img
+          src="{{ url_for('static', filename='images/logo.jpeg') }}"
+          alt="DCC Logo"
+          class="login-logo-img"
+        />
+        <span>DCC</span>
+      </a>
+      <p class="eyebrow">DEHIWALA COMMUNITY CHURCH</p>
+      <h1>Welcome back</h1>
+      <p class="login-description">Sign in to manage your church website.</p>
+      {% with messages = get_flashed_messages(with_categories=true) %}{% for
+      category, message in messages %}
+      <div class="notice {{ category }}" role="status">{{ message }}</div>
+      {% endfor %}{% endwith %}
+      <form method="post" action="{{ url_for('admin_login_post') }}">
+        <input
+          type="hidden"
+          name="_csrf_token"
+          value="{{ csrf_token() }}"
+        /><label for="username"
+          >Username<input
+            id="username"
+            name="username"
+            autocomplete="username"
+            required /></label
+        ><label for="password"
+          >Password<input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            required /></label
+        ><button
+          class="show-password"
+          type="button"
+          data-show-password
+          aria-controls="password"
+          aria-pressed="false"
+        >
+          Show password</button
+        ><button class="button primary" type="submit">Sign in</button>
+      </form>
+      <a class="back-link" href="{{ url_for('home') }}">← Back to website</a>
+    </main>
+  </body>
+</html>

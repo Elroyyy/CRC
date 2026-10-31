@@ -1,0 +1,66 @@
+{% extends 'admin_base.html' %}{% set active = 'inquiries' %} {% block title
+%}Inquiries{% endblock %} {% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">STAY CONNECTED</p>
+    <h1>Website inquiries</h1>
+    <p>Messages from visitors and members of the community.</p>
+  </div>
+</div>
+<section class="panel" data-list>
+  <div class="list-toolbar">
+    <label class="search-label"
+      >Search inquiries<input
+        type="search"
+        data-search
+        placeholder="Search name, email or message"
+    /></label>
+  </div>
+  <div class="list-summary" data-result-count aria-live="polite">
+    {{ inquiries | length }} inquiries
+  </div>
+  {% for inquiry in inquiries %}
+  <details
+    class="message-record"
+    id="inquiry-{{ inquiry.id }}"
+    data-record
+    data-search-text="{{ inquiry.name }} {{ inquiry.email }} {{ inquiry.phone }} {{ inquiry.note }}"
+  >
+    <summary>
+      <span class="avatar" aria-hidden="true"
+        >{{ inquiry.name[:1] | upper }}</span
+      ><span class="row-copy"
+        ><strong>{{ inquiry.name }}</strong
+        ><span class="truncate">{{ inquiry.note }}</span></span
+      ><time>{{ inquiry.created_at | admindatetime }}</time
+      ><span class="expand-hint" aria-hidden="true">+</span>
+    </summary>
+    <div class="message-body">
+      <div class="contact-actions">
+        <a class="button secondary" href="mailto:{{ inquiry.email }}"
+          >Email {{ inquiry.email }}</a
+        ><a class="button secondary" href="tel:{{ inquiry.phone }}"
+          >Call {{ inquiry.phone }}</a
+        >
+      </div>
+      <p class="preserve-lines">{{ inquiry.note }}</p>
+      <p class="field-hint">
+        Email opens your mail app. Contacting someone does not automatically
+        mark this inquiry as resolved.
+      </p>
+    </div>
+  </details>
+  {% endfor %}
+  <p class="empty" data-no-results {% if inquiries %}hidden{% endif %}>
+    {% if load_error %}Inquiries are temporarily unavailable.{% else %}No
+    inquiries to show. New messages will appear here, or try a different
+    search.{% endif %}
+  </p>
+  <div class="pagination" data-pagination hidden>
+    <button type="button" class="button secondary" data-page-prev>
+      Previous</button
+    ><span data-page-status></span
+    ><button type="button" class="button secondary" data-page-next>Next</button>
+  </div>
+</section>
+{% endblock %}

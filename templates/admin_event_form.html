@@ -1,0 +1,122 @@
+{% extends 'admin_base.html' %}{% set active = 'events' %} {% block title %}{{
+'Edit event' if editing else 'Add event' }}{% endblock %} {% block content %}
+<a class="back-link" href="{{ url_for('admin_events') }}">← All events</a>
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">CHURCH LIFE</p>
+    <h1>{{ 'Edit event' if editing else 'Add an event' }}</h1>
+    <p>Write the details as you’d like visitors to see them.</p>
+  </div>
+</div>
+<form
+  method="post"
+  enctype="multipart/form-data"
+  data-event-editor
+  class="editor-grid"
+>
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+  <div>
+    <section class="panel form-panel">
+      <div class="panel-heading">
+        <h2>Event details</h2>
+        <span class="muted">All text fields required</span>
+      </div>
+      <label for="title"
+        >Event title<input
+          id="title"
+          name="title"
+          maxlength="180"
+          required
+          value="{{ event.title if event else '' }}"
+          placeholder="e.g. Sunday worship service"
+      /></label>
+      <label for="event_date"
+        >Event date<input
+          type="date"
+          id="event_date"
+          name="event_date"
+          required
+          value="{{ event.event_date if event else '' }}"
+      /></label>
+      <label for="description"
+        >Description<textarea
+          id="description"
+          name="description"
+          rows="8"
+          maxlength="10000"
+          required
+          placeholder="Include the time, location and details visitors need."
+        >
+{{ event.description if event else '' }}</textarea
+        >
+      </label>
+      <p class="field-hint">
+        Line breaks are kept when the event is displayed on the website.
+      </p>
+    </section>
+    <section class="panel form-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Event image</h2>
+          <p class="muted">Optional · JPG, PNG, GIF or WebP · up to 8 MB</p>
+        </div>
+      </div>
+      <label for="image" class="upload-label"
+        >Choose a poster or photograph</label
+      ><input
+        type="file"
+        id="image"
+        name="image"
+        accept="image/jpeg,image/png,image/gif,image/webp"
+      />
+      <p class="field-hint">
+        {% if editing %}Choose a new file to replace the current image. Leaving
+        this empty keeps the existing image.{% else %}Your event can be
+        published without an image.{% endif %} The full image is displayed
+        without cropping.
+      </p>
+      <p class="field-error" data-upload-error role="alert"></p>
+      <button
+        type="button"
+        class="button secondary small"
+        data-clear-upload
+        hidden
+      >
+        Clear new selection
+      </button>
+    </section>
+    <div class="editor-actions">
+      <button type="submit" class="button primary">
+        {{ 'Save changes' if editing else 'Publish event' }}</button
+      ><a class="button secondary" href="{{ url_for('admin_events') }}"
+        >Cancel</a
+      ><span class="muted" data-editor-status role="status"></span>
+    </div>
+  </div>
+  <aside class="preview-column">
+    <p class="eyebrow">WEBSITE CARD PREVIEW</p>
+    <article class="preview-card">
+      <div class="preview-image" data-preview-image>
+        {% if event and event.image_path %}<img
+          src="{{ event.image_path | eventimage }}"
+          alt="Current event image"
+          data-image-fallback
+        />{% else %}<span>No image selected</span>{% endif %}
+      </div>
+      <div class="preview-copy">
+        <p data-preview-date>
+          {{ event.event_date | dateformat if event else 'Event date' }}
+        </p>
+        <h2 data-preview-title>
+          {{ event.title if event else 'Your event title' }}
+        </h2>
+        <p data-preview-description>
+          {{ event.description if event else 'Your event description will appear
+          here.' }}
+        </p>
+      </div>
+    </article>
+    <p class="field-hint">Preview only. Changes go live after you save.</p>
+  </aside>
+</form>
+{% endblock %}

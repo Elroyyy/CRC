@@ -1,0 +1,121 @@
+{% extends 'admin_base.html' %}{% set active = 'rentals' %} {% block title
+%}Space rentals{% endblock %} {% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">OUR SPACES</p>
+    <h1>Rental requests</h1>
+    <p>
+      Review venue enquiries and contact organisers to discuss arrangements.
+    </p>
+  </div>
+</div>
+<div class="notice info">
+  A request is an enquiry, not a confirmed booking. Agree availability and
+  arrangements with the organiser before confirming.
+</div>
+<section class="panel" data-list>
+  <div class="list-toolbar">
+    <label class="search-label"
+      >Search requests<input
+        type="search"
+        data-search
+        placeholder="Search organiser, event or space" /></label
+    ><label
+      >Event date<select data-date-filter>
+        <option value="">All dates</option>
+        <option value="upcoming">Today and upcoming</option>
+        <option value="past">Earlier requests</option>
+        <option value="this-month">This month</option>
+        <option value="next-month">Next month</option>
+      </select></label
+    ><label
+      >Space<select data-space-filter>
+        <option value="">All spaces</option>
+        {% for space in rentals | map(attribute='space_requested') | unique %}
+        <option value="{{ space }}">{{ space }}</option>
+        {% endfor %}
+      </select></label
+    ><button type="button" class="button secondary" data-reset-filters>
+      Reset
+    </button>
+  </div>
+  <div class="list-summary" data-result-count aria-live="polite">
+    {{ rentals | length }} requests
+  </div>
+  {% for rental in rentals %}
+  <details
+    class="message-record rental-record"
+    id="rental-{{ rental.id }}"
+    data-record
+    data-date="{{ rental.event_date }}"
+    data-space="{{ rental.space_requested }}"
+    data-search-text="{{ rental.name }} {{ rental.email }} {{ rental.phone }} {{ rental.event_type }} {{ rental.space_requested }} {{ rental.message }}"
+  >
+    <summary>
+      <span class="date-tile"
+        ><strong>{{ rental.event_date | dateformat('%d') }}</strong
+        ><span>{{ rental.event_date | dateformat('%b') }}</span></span
+      ><span class="row-copy"
+        ><strong>{{ rental.name }}</strong
+        ><span
+          >{{ rental.event_type }} · {{ rental.space_requested }}</span
+        ></span
+      ><span class="rental-summary-date"
+        >{{ rental.event_date | dateformat }}<small
+          >{{ rental.guest_count }} guests</small
+        ></span
+      ><span class="expand-hint" aria-hidden="true">+</span>
+    </summary>
+    <div class="message-body">
+      <dl class="detail-grid">
+        <div>
+          <dt>Event date</dt>
+          <dd>{{ rental.event_date | dateformat }}</dd>
+        </div>
+        <div>
+          <dt>Time</dt>
+          <dd>{{ rental.start_time[:5] }} – {{ rental.end_time[:5] }}</dd>
+        </div>
+        <div>
+          <dt>Space</dt>
+          <dd>{{ rental.space_requested }}</dd>
+        </div>
+        <div>
+          <dt>Expected guests</dt>
+          <dd>{{ rental.guest_count }}</dd>
+        </div>
+        <div>
+          <dt>Submitted</dt>
+          <dd>{{ rental.created_at | admindatetime }}</dd>
+        </div>
+        <div>
+          <dt>Additional needs</dt>
+          <dd>{{ rental.additional_needs or 'None specified' }}</dd>
+        </div>
+      </dl>
+      {% if rental.message %}
+      <h3>Additional details</h3>
+      <p class="preserve-lines">{{ rental.message }}</p>
+      {% endif %}
+      <div class="contact-actions">
+        <a class="button secondary" href="mailto:{{ rental.email }}"
+          >Email {{ rental.email }}</a
+        ><a class="button secondary" href="tel:{{ rental.phone }}"
+          >Call {{ rental.phone }}</a
+        >
+      </div>
+    </div>
+  </details>
+  {% endfor %}
+  <p class="empty" data-no-results {% if rentals %}hidden{% endif %}>
+    {% if load_error %}Rental requests are temporarily unavailable.{% else %}No
+    requests to show. Try another filter or wait for new enquiries.{% endif %}
+  </p>
+  <div class="pagination" data-pagination hidden>
+    <button type="button" class="button secondary" data-page-prev>
+      Previous</button
+    ><span data-page-status></span
+    ><button type="button" class="button secondary" data-page-next>Next</button>
+  </div>
+</section>
+{% endblock %}

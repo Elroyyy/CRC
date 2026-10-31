@@ -1,4 +1,4 @@
-/* CSS Reset */
+﻿/* CSS Reset */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -202,9 +202,9 @@ a:focus {
 }
 
 .logo img {
-    height: 60px;
+    height: 140px;
     width: auto;
-    transition: height 0.3s ease;
+    transition: height 0.35s ease, opacity 0.35s ease;
 }
 
 .hamburger {
@@ -213,7 +213,9 @@ a:focus {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    z-index: 1001;
+    z-index: 10001;
+    position: relative;
+    outline: none;
 }
 
 .hamburger span {
@@ -245,10 +247,11 @@ a:focus {
     right: -100%;
     width: 250px;
     height: 100%;
-    background: transparent;
+    background: white;
     transition: right 0.3s ease;
     z-index: 10000;
     padding-top: 4rem;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
 }
 
 .sidebar.active {
@@ -256,7 +259,7 @@ a:focus {
 }
 
 .navbar.scrolled .logo img {
-    height: 70px;
+    height: 60px;
 }
 
 .nav-links {
@@ -302,7 +305,7 @@ a:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 999;
     opacity: 0;
     visibility: hidden;
@@ -338,6 +341,7 @@ a:focus {
 
     .sidebar {
         display: block;
+        background: white !important;
     }
 
     .nav-links {
@@ -897,7 +901,7 @@ a:focus {
 .about-content {
     max-width: 900px;
     margin: 0 auto;
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .about-content h1 {
@@ -916,7 +920,7 @@ a:focus {
    text-align: justify;
     max-width: 1200px;
     margin: 0 auto 5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: black;
     line-height: 1.8;
     gap: 20px;
@@ -938,7 +942,7 @@ a:focus {
     text-align: justify;
     max-width: 1200px;
     margin: 0 auto 5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: black;
     line-height: 1.8;
     gap: 20px;
@@ -946,17 +950,17 @@ a:focus {
 }
 
 .story-intro img {
-    width: 70%;
+    width: 100%;
     height: 70%;
     object-fit: cover; /* Keeps image neat */
     border-radius: 12px;
     position: relative;
-    left: 15%;
+    left: 8%;
 }
 
 /* Sermons Page Styles */
 .sermons-page {
-    padding: 8rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -1294,7 +1298,7 @@ a:focus {
 .ministries-content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .ministries-content h1 {
@@ -1411,7 +1415,7 @@ a:focus {
 
 /* Events Page Styles */
 .events-page {
-    padding: 6rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
 }
 
 .events-page h1 {
@@ -1460,7 +1464,7 @@ a:focus {
 
 /* Space Rental Styles */
 .space-rental-page {
-    padding: 8rem 1rem 4rem;
+    padding: 10rem 1rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -1778,9 +1782,10 @@ a:focus {
 .footer-content {
     max-width: 1400px;
     margin: 0 auto;
+    margin-left: 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: 4rem;
 }
 
 .footer-section h3 {

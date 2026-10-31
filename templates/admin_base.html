@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Overview{% endblock %} · DCC Admin</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='js/admin.js') }}"
+      defer
+    ></script>
+  </head>
+  <body class="admin-app">
+    <a class="skip" href="#admin-main">Skip to content</a>
+    <header class="mobile-header">
+      <a class="mobile-brand" href="{{ url_for('admin_dashboard') }}"
+        >DCC <span>Administration</span></a
+      ><button
+        type="button"
+        class="menu-toggle"
+        aria-controls="admin-sidebar"
+        aria-expanded="false"
+      >
+        Menu
+      </button>
+    </header>
+    <aside class="sidebar" id="admin-sidebar">
+      <a class="brand" href="{{ url_for('admin_dashboard') }}"
+        ><img
+          src="{{ url_for('static', filename='images/logo.jpeg') }}"
+          alt="DCC Logo"
+          class="brand-logo-img"
+        /><span class="brand-mark">DCC</span
+        ><span>Dehiwala<br />Community Church</span></a
+      >
+      <p class="nav-label">WORKSPACE</p>
+      <nav aria-label="Administration">
+        {% for key, label, endpoint, symbol in [('dashboard', 'Overview',
+        'admin_dashboard', '◫'), ('events', 'Events', 'admin_events', '▦'),
+        ('inquiries', 'Inquiries', 'admin_inquiries', '✉'), ('rentals', 'Space
+        rentals', 'admin_space_rentals', '⌂'), ('sermons', 'Sermons',
+        'admin_sermons', '▤')] %}
+        <a
+          href="{{ url_for(endpoint) }}"
+          aria-current="{{ 'page' if active == key else 'false' }}"
+          ><span class="nav-symbol" aria-hidden="true">{{ symbol }}</span>{{
+          label }}{% if key == 'sermons' %}<small>Backend</small>{% endif %}</a
+        >
+        {% endfor %}
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="{{ url_for('home') }}" target="_blank" rel="noopener"
+          >View website <span aria-hidden="true">↗</span></a
+        ><a href="{{ url_for('admin_logout') }}"
+          >Sign out <span aria-hidden="true">→</span></a
+        >
+      </div>
+    </aside>
+    <div class="admin-workspace">
+      <div class="workspace-bar">
+        <span>CHURCH ADMINISTRATION</span
+        ><span class="workspace-tag">Dehiwala Community Church</span>
+      </div>
+      <main id="admin-main" tabindex="-1">
+        {% with messages = get_flashed_messages(with_categories=true) %}{% for
+        category, message in messages %}
+        <div class="notice {{ category }}" role="status">{{ message }}</div>
+        {% endfor %}{% endwith %} {% if load_error %}
+        <div class="notice error" role="alert">
+          <strong>We couldn’t load this page’s data.</strong>
+          <p>Your session is still active. Please try again.</p>
+          <a href="{{ request.path }}">Try again</a>
+        </div>
+        {% endif %} {% block content %}{% endblock %}
+      </main>
+      <footer class="admin-footer">
+        Dehiwala Community Church <span>Times shown in Sri Lanka time</span>
+      </footer>
+    </div>
+    <dialog id="delete-dialog" aria-labelledby="delete-title">
+      <form method="dialog">
+        <p class="eyebrow">DELETE EVENT</p>
+        <h2 id="delete-title">Delete this event?</h2>
+        <p id="delete-description"></p>
+        <p>
+          This removes the event from the website. This cannot be undone here.
+        </p>
+        <div class="actions">
+          <button value="cancel" class="button secondary">Keep event</button
+          ><button value="confirm" class="button danger">Delete event</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

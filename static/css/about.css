@@ -1,0 +1,313 @@
+.about-story {
+  --about-ink: #203e33;
+  width: min(1160px, 90%);
+  margin: 0 auto;
+  padding: 76px 0 90px;
+  color: var(--about-ink);
+}
+
+.about-story p {
+  color: inherit;
+  font-size: 16px;
+  line-height: 1.85;
+  margin: 0 0 20px;
+}
+
+.about-story .about-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.about-story h1,
+.about-story h2 {
+  color: inherit;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  text-align: left;
+  line-height: 1.12;
+  margin: 0 0 24px;
+}
+
+.about-story h1 {
+  font-size: clamp(36px, 4.5vw, 64px);
+  letter-spacing: -2px;
+}
+
+.about-story h2 {
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -1px;
+}
+
+.about-story-intro {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  align-items: center;
+  gap: 70px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid #cdd3ca;
+}
+
+.about-story .about-lead {
+  max-width: 510px;
+  font-size: 18px;
+}
+
+.about-origin {
+  border-left: 1px solid #cdd3ca;
+  padding-left: 42px;
+}
+
+.about-origin > span {
+  font-size: 13px;
+}
+
+.about-origin strong {
+  display: block;
+  font-size: clamp(64px, 7vw, 100px);
+  line-height: 1.2;
+  letter-spacing: -5px;
+}
+
+.about-origin p {
+  max-width: 290px;
+}
+
+.about-journey {
+  padding: 54px 0;
+}
+
+.about-timeline {
+  list-style: none;
+  margin: 26px 0 12px;
+  padding: 0;
+}
+
+.about-timeline li {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 30px;
+  padding-bottom: 36px;
+}
+
+.about-year {
+  font-size: 25px;
+  font-weight: 600;
+  padding-top: 3px;
+}
+
+.about-timeline li > div {
+  border-left: 2px solid #cdd3ca;
+  padding-left: 32px;
+}
+
+.about-timeline .about-eyebrow {
+  margin-bottom: 10px;
+}
+
+.about-timeline h2 {
+  font-size: clamp(24px, 2.5vw, 34px);
+  margin-bottom: 14px;
+}
+
+.about-timeline p {
+  max-width: 760px;
+}
+
+.about-expand {
+  border-top: 1px solid #bfcbbf;
+  border-bottom: 1px solid #bfcbbf;
+}
+
+.about-expand + .about-expand {
+  border-top: 0;
+}
+
+.about-expand summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  list-style: none;
+  padding: 22px 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.about-expand summary::-webkit-details-marker {
+  display: none;
+}
+
+.about-expand summary:focus-visible {
+  outline: 2px solid var(--about-ink);
+  outline-offset: 5px;
+}
+
+.about-expand summary > span[aria-hidden] {
+  font-size: 26px;
+  font-weight: 400;
+  flex: 0 0 24px;
+  text-align: center;
+  transition: transform 160ms ease;
+}
+
+.about-expand[open] summary > span[aria-hidden] {
+  transform: rotate(45deg);
+}
+
+.about-expanded-copy {
+  padding: 0 0 14px;
+  max-width: 830px;
+}
+
+.about-belief {
+  background: #e1e7db;
+  padding: 42px 48px;
+}
+
+.about-belief > p {
+  max-width: 660px;
+}
+
+.about-leadership {
+  padding-top: 68px;
+}
+
+.about-leadership-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  margin-top: 32px;
+}
+
+.about-family {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  margin: 0;
+}
+
+.about-family img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.about-family figcaption {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #586a60;
+}
+
+.about-biographies {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.about-biographies small,
+.about-biographies strong {
+  display: block;
+}
+
+.about-biographies small {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.about-biographies strong {
+  font-size: 18px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .about-story {
+    padding: 40px 0 55px;
+  }
+
+  .about-story-intro {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-bottom: 30px;
+  }
+
+  .about-story h1 {
+    letter-spacing: -1.5px;
+  }
+
+  .about-story p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .about-origin {
+    padding-left: 20px;
+  }
+
+  .about-origin strong {
+    font-size: 62px;
+    letter-spacing: -3px;
+  }
+
+  .about-origin p {
+    max-width: none;
+  }
+
+  .about-journey {
+    padding: 35px 0;
+  }
+
+  .about-timeline li {
+    grid-template-columns: 57px minmax(0, 1fr);
+    gap: 12px;
+    padding-bottom: 24px;
+  }
+
+  .about-year {
+    font-size: 19px;
+  }
+
+  .about-timeline li > div {
+    padding-left: 16px;
+  }
+
+  .about-belief {
+    padding: 28px 22px;
+  }
+
+  .about-leadership {
+    padding-top: 40px;
+  }
+
+  .about-leadership-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 25px;
+    margin-top: 24px;
+  }
+
+  .about-family {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .about-biographies {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-expand summary > span[aria-hidden] {
+    transition: none;
+  }
+}

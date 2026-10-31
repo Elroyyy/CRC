@@ -1,0 +1,118 @@
+{% extends 'admin_base.html' %}{% set active = 'dashboard' %} {% block title
+%}Overview{% endblock %} {% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">YOUR WORKSPACE</p>
+    <h1>Church overview</h1>
+    <p>Manage what’s happening and stay connected with your community.</p>
+  </div>
+  <a class="button primary" href="{{ url_for('admin_add_event') }}"
+    >+ Add event</a
+  >
+</div>
+<section class="welcome-panel">
+  <div>
+    <p class="eyebrow">CONTENT &amp; CONNECTIONS</p>
+    <h2>Your church workspace.</h2>
+    <p>Manage events, read messages and review venue enquiries.</p>
+  </div>
+  <a href="{{ url_for('home') }}" target="_blank" rel="noopener"
+    >View the website <span aria-hidden="true">↗</span></a
+  ><span class="welcome-cross" aria-hidden="true">✝</span>
+</section>
+<div class="stat-grid" aria-label="Record totals">
+  {% for key, label, endpoint, note in [('events', 'Church events',
+  'admin_events', 'All event records'), ('inquiries', 'Website inquiries',
+  'admin_inquiries', 'All contact messages'), ('rentals', 'Rental requests',
+  'admin_space_rentals', 'All venue enquiries')] %}
+  <a class="stat-card" href="{{ url_for(endpoint) }}"
+    ><div><span>{{ label }}</span><span aria-hidden="true">↗</span></div>
+    <strong
+      >{{ totals.get(key) if totals is defined and totals.get(key) is not none
+      else '—' }}</strong
+    ><small>{{ note }}</small></a
+  >
+  {% endfor %}
+</div>
+<div class="overview-grid">
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">CHURCH LIFE</p>
+        <h2>Latest events</h2>
+      </div>
+      <a href="{{ url_for('admin_events') }}">View all →</a>
+    </div>
+    {% for event in events[:5] %}<a
+      class="record-row event-row"
+      href="{{ url_for('admin_edit_event', event_id=event.id) }}"
+      ><div class="date-tile">
+        <strong>{{ event.event_date | dateformat('%d') }}</strong
+        ><span>{{ event.event_date | dateformat('%b') }}</span>
+      </div>
+      <div class="row-copy">
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.event_date | dateformat }}</p>
+      </div>
+      <span class="row-arrow" aria-hidden="true">↗</span></a
+    >{% else %}
+    <p class="empty">
+      {% if load_error %}Event data is unavailable.{% else %}No events yet. Add
+      your first church event to get started.{% endif %}
+    </p>
+    {% endfor %}
+  </section>
+  <section class="panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">GET IN TOUCH</p>
+        <h2>Recent inquiries</h2>
+      </div>
+      <a href="{{ url_for('admin_inquiries') }}">View all →</a>
+    </div>
+    {% for inquiry in inquiries[:5] %}<a
+      class="record-row"
+      href="{{ url_for('admin_inquiries') }}#inquiry-{{ inquiry.id }}"
+      ><span class="avatar" aria-hidden="true"
+        >{{ inquiry.name[:1] | upper }}</span
+      >
+      <div class="row-copy">
+        <h3>{{ inquiry.name }}</h3>
+        <p class="truncate">{{ inquiry.note }}</p>
+        <small>{{ inquiry.created_at | admindatetime }}</small>
+      </div>
+      <span class="row-arrow" aria-hidden="true">→</span></a
+    >{% else %}
+    <p class="empty">
+      {% if load_error %}Inquiry data is unavailable.{% else %}No inquiries yet.
+      New messages will appear here.{% endif %}
+    </p>
+    {% endfor %}
+  </section>
+  <section class="panel wide">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">OUR SPACES</p>
+        <h2>Recent rental requests</h2>
+      </div>
+      <a href="{{ url_for('admin_space_rentals') }}">View all →</a>
+    </div>
+    {% for rental in rentals[:5] %}<a
+      class="record-row rental-row"
+      href="{{ url_for('admin_space_rentals') }}#rental-{{ rental.id }}"
+      ><div class="row-copy">
+        <h3>{{ rental.name }}</h3>
+        <p>{{ rental.event_type }} · {{ rental.space_requested }}</p>
+      </div>
+      <span>{{ rental.event_date | dateformat }}</span
+      ><span class="muted">{{ rental.guest_count }} guests</span
+      ><span class="row-arrow" aria-hidden="true">→</span></a
+    >{% else %}
+    <p class="empty">
+      {% if load_error %}Rental data is unavailable.{% else %}No rental requests
+      yet. Requests from the website will appear here.{% endif %}
+    </p>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

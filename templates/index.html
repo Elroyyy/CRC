@@ -1,632 +1,888 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Dehiwala Community Church (DCC)</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32"
-          href="{{ url_for('static', filename='images/logo.jpeg') }}">
-    <link rel="icon" type="image/png" sizes="192x192"
-          href="{{ url_for('static', filename='images/logo.jpeg') }}">
-    <link rel="apple-touch-icon"
-          href="{{ url_for('static', filename='images/logo.jpeg') }}">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='images/logo.jpeg') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{ url_for('static', filename='images/logo.jpeg') }}"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="{{ url_for('static', filename='images/logo.jpeg') }}"
+    />
 
-    <!-- SEO / Preview -->
-    <meta property="og:title" content="Dehiwala Community Church">
-    <meta property="og:description" content="A Christ-centered community built on Worship, Word, and Service.">
-    <meta property="og:image"
-          content="https://dehiwalacommunitychurch.lk/static/images/icon.png">
+    <meta property="og:title" content="Dehiwala Community Church" />
+    <meta
+      property="og:description"
+      content="A Christ-centered community built on Worship, Word, and Service."
+    />
+<!--    <meta-->
+<!--      property="og:image"-->
+<!--      content="https://dehiwalacommunitychurch.lk/static/images/icon.png"-->
+<!--    />-->
 
-    <!-- Fonts & Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
 
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@500;600&family=Noto+Sans+Sinhala:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Main CSS -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/public.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/about.css') }}"
+    />
+  </head>
 
-<body>
-    <!-- Preloader -->
-<!--    <div class="preloader" id="preloader" role="status" aria-live="polite">-->
-<!--        <div class="preloader-content">-->
-<!--            <div class="preloader-logo">-->
-<!--                <img src="{{ url_for('static', filename='images/Picture2.png') }}">-->
-<!--            </div>-->
-<!--            <div class="progress-bar">-->
-<!--                <div class="progress-fill" id="progress-fill"></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+  <body>
+    <a class="skip-link" href="#home">Skip to content</a>
 
-    <!-- Success Message Overlay -->
-    <div class="success-message" id="success-message" role="alert" aria-live="assertive">
-        <i class="fas fa-check-circle"></i>
-        <h3>Success!</h3>
-        <p>Your message has been sent successfully.</p>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-    <a href="/" class="logo" aria-label="DCC">
-        <img src="{{ url_for('static', filename='images/HOME_ICON.png') }}" alt="Church Logo" loading="lazy">
-    </a>
-    <button class="hamburger" aria-label="Toggle menu">
+    <nav
+      class="navbar"
+      id="navbar"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <a href="/" class="logo" aria-label="Dehiwala Community Church — Home">
+        <span class="logo-emblem" aria-hidden="true">
+          <img
+            src="{{ url_for('static', filename='images/logo.jpeg') }}"
+            alt=""
+          />
+        </span>
+        <span class="logo-wordmark" aria-hidden="true">DCC</span>
+      </a>
+      <button
+        class="hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="sidebar"
+      >
         <span></span>
         <span></span>
         <span></span>
-    </button>
-    <div class="sidebar" id="sidebar">
+      </button>
+      <div class="sidebar" id="sidebar">
         <ul class="nav-links">
-            <li><a href="#" onclick="return showPage('home')">Home</a></li>
-            <li><a href="#" onclick="return showPage('about')">About Us</a></li>
-<!--            <li><a href="#" onclick="showPage('sermons')">Sermons</a></li>-->
-<!--            <li><a href="#" onclick="showPage('ministries')">Ministries</a></li>-->
-            <li><a href="#" onclick="return showPage('events')">Events</a></li>
-            <li><a href="#" onclick="return showPage('space-rentals')">Space Rental</a></li>
-            <li><a href="#" onclick="return scrollToContact()">Contact</a></li>
+          <li><a href="/" data-page="home">Home</a></li>
+          <li><a href="/about" data-page="about">About Us</a></li>
+
+          <li><a href="/events" data-page="events">Events</a></li>
+          <li>
+            <a href="/space-rentals" data-page="space-rentals">Space Rental</a>
+          </li>
+          <li><a href="/#contact-section" data-contact>Contact</a></li>
         </ul>
-    </div>
-</nav>
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
+      </div>
+    </nav>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-        <!-- Home Page -->
-    <div id="home" class="page active" role="main">
-            <!-- Hero Section -->
-            <section class="hero">
-                <picture>
-                    <!-- Mobile image -->
-                    <source
-                      media="(max-width: 768px)"
-                      srcset="/static/images/COVER-MOBILE.jpg">
-
-                    <!-- Default desktop image -->
-                    <img
-                      src="/static/images/COVER.jpg"
-                      class="hero-bg"
-                      alt="Hero Background">
-                  </picture>
-                <div class="hero-content">
-<!--                    <h1 class="fade-in">Dehiwala Community Church</h1>-->
-<!--                    <p class="fade-in delay-1">Welcome to our Church</p>-->
-<!--                    <a href="#" class="cta-button fade-in delay-2" onclick="scrollToContact()" aria-label="Join Our Community">Join Our Community</a>-->
-                </div>
-                <div class="scroll-indicator" aria-hidden="true">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </section>
-
-            <!-- Description Section -->
-            <section class="description section-bg">
-                <h2 class="fade-in">WORSHIP, WORD AND SERVICE</h2>
-                <p class="fade-in delay-1">We are a Church that is centered on Worship, Word, and Service for the Glory of God. We uphold the primary authority of Scripture, affirm allegiance to the historic Nicene Faith, and commit ourselves to holistic mission and ministry in the world.</p>
-            </section>
-
-
-         <!-- Events Section-->
-            <section class="events">
-                <h2 class="fade-in">Recent Events</h2>
-                <div class="events-container" id="home-events">
-
-                </div>
-            </section>
-
-<!--            <div class="parallax">-->
-<!--                <div class="parallax-bg"></div>-->
-<!--                <div class="parallax-inner">-->
-<!--                    <h2> </h2>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
-            <!-- Gallery Section
-            <section class="gallery">
-                <div class="gallery-container">
-                    <div class="gallery-item fade-in">
-                        <img src="{{ url_for('static', filename='images/gallery1.jpeg') }}" alt="Christian Revival Crusade">
-                    </div>
-                    <div class="gallery-item fade-in">
-                        <img src="{{ url_for('static', filename='images/pic.jpg') }}" alt="Community Event">
-                    </div>
-                </div>
-            </section> -->
-
-            <!-- Service Times
-            <section class="service-times">
-                <h2 class="fade-in">Sunday Service Schedule</h2>
-                <div class="times-container">
-                    <div class="time-item slide-in-left">
-                        <h3>Children Sunday School</h3>
-                        <p><strong>8:00 AM - 8:45 AM</strong></p>
-                    </div>
-                    <div class="time-item fade-in delay-1">
-                        <h3>Bible Study</h3>
-                        <p><strong>8:00 AM - 9:00 AM</strong></p>
-                    </div>
-                    <div class="time-item slide-in-right">
-                        <h3>Worship and Sermon</h3>
-                        <p><strong>9:00 AM - 10:30 AM</strong></p>
-                    </div>
-                </div>
-            </section>-->
-
-
-            <!-- Contact Section -->
-            <section class="contact" id="contact-section">
-                <div class="contact-container">
-                    <h2 class="fade-in">Get In Touch</h2>
-                    <form class="contact-form slide-in-left" onsubmit="submitInquiry(event)" aria-label="Contact Form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required aria-required="true">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" required aria-required="true">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required aria-required="true">
-                        </div>
-                        <div class="form-group">
-                            <label for="note">Message</label>
-                            <textarea id="note" name="note" rows="5" required aria-required="true"></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                    <div class="map-section slide-in-right">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7922.547464657554!2d79.85896028247733!3d6.857759096315313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b46565a9d03%3A0x410578f022b3036d!2sChristian%20Revival%20Crusade%20Church!5e0!3m2!1sen!2slk!4v1760178256497!5m2!1sen!2slk" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" aria-label="Map showing church location"></iframe>
-                        <div class="location-info">
-                            <h3>Visit Us</h3>
-                            <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
-                            <p><i class="fas fa-clock"></i> Always Welcomed</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-    </div>
-
-        <!-- About Page -->
-    <div id="about" class="page">
-        <div class="about-content">
-            <h1>About Us</h1>
-            <div class="about-text">
-              <!--  <img src="{{ url_for('static', filename='images/pastor.png') }}" alt="Our Pastor" class="about-image">-->
-                <p>Dehiwala Community Church is a Christ-centered community built on <b>Worship,</b> the <b>Word,</b> and <b>Service.</b> We exist to bring the light and life of Jesus Christ to our neighborhood and beyond, proclaiming the gospel in both word and action. We are associated with Christian Revival Crusade, and we joyfully embrace our identity as a charismatic church while remaining firmly grounded in the orthodox Christian faith. We value the work of the Holy Spirit, the authority of Scripture, and the historic truths of the Church.</p><br>
-
-                <p>At our core, we are a family-oriented church that believes faith is best lived out in community. We seek to nurture meaningful relationships, walk alongside one another in life’s journey, and intentionally build and disciple serious followers of Christ. Whether you are exploring faith or growing deeper in your walk with God, you are welcome here. Our mission is simple: to <b>love God</b> wholeheartedly, <b>serve our community</b> faithfully, and <b>make disciples</b> who reflect Christ in everyday life.</p>
-
-            </div>
-            <h2>Our Story</h2>
-            <div class="story-intro">
-                <p>Dehiwala Community Church traces its roots to a humble beginning on [blank date], when Senior Pastor Navaradnarajah Somanathan and his wife Jeevardharshini Somanathan responded to God’s call and began the ministry under the name Streams of Power. What started as a small step of faith soon grew into a vibrant work, grounded in prayer, the Word of God, and a deep love for people. In the years that followed, the ministry became part of Christian Revival Crusade (CRC)—a Pentecostal denomination headquartered in Australia—embracing a wider vision while remaining committed to serving the local community. After many years of waiting, praying, and faithfully believing, the CRC headquarters and church space were finally completed in 2017, marking a significant milestone in the journey of the ministry.</p><br>
-                <p>Pastor Somanathan has faithfully served the Lord and His people for over [blank] years, with Jeevardharshini standing alongside him as a steadfast support and gifted administrator of the ministry. Together, their servant leadership has helped nurture both spiritual growth and practical outreach. Over time, the ministry expanded to include two children’s homes in Valaichchenai, a pre-school in Vavuniya, and several church plants, reflecting a heart for holistic mission—reaching children, families, and communities with the love of Christ.</p><br>
-                <p>In 2025, the leadership sensed a renewed vision from God: to focus intentionally on the immediate neighborhood of Dehiwala. Out of this calling, Dehiwala Community Church was born—a local expression of the wider CRC family, committed to being a beacon of hope to the city of Dehiwala. Today, Dehiwala Community Church exists to worship God, proclaim His Word, and serve our community with compassion. We are grateful for the journey so far and look forward with faith to all that God will continue to do among us.</p><br>
-            </div>
-
-            <h2>Leadership Team</h2>
-            <div class="story-intro">
-                <img src="/static/images/family.png" alt="Leadership Team">
-                <p><b>Senior Pastor</b></p><br>
-                <p>Pastors Navaradnarajah and Jeevadharshini Somanathan have faithfully served in ministry for over [blank] years and are the founding leaders behind what is now Dehiwala Community Church. Pastor Somanathan serves as the National Chairman of Christian Revival Crusade and Senior Pastor of Dehiwala Community Church, leading with a deep pastoral heart and a clear vision for building Christ-centered communities. Together, they are blessed with three children and six grandchildren, and continue to minister as a devoted team, with Jeevadharshini providing strong support and leadership in administration and care. United by a shared passion to bring many to Christ and to build a healthy, loving community, they remain committed to seeing lives transformed through the Gospel.</p><br>
-                <p><b>Associate Pastor</b> </p><br>
-                <p>Pastor Nathanael Somanathan serves alongside his father in strengthening the life of Dehiwala Community Church while also leading as Principal of Colombo Theological Seminary. He is married to Skyler Somanathan, and together they are blessed with their daughter, Maeva Somanathan. When not serving at the seminary, Pastor Nathanael is actively involved in pastoral ministry at DCC, where he and Skyler head the English Service. His heart is to form Spirit-filled believers through solid theological teaching, the communal practice of faith, and attentiveness to the wisdom of the Church across space and time—helping disciples grow rooted in Scripture, empowered by the Spirit, and committed to vibrant community life.</p><br>
-            </div>
+    <div
+      id="home"
+      class="page{% if current_page == 'home' %} active{% endif %}"
+    >
+      <section class="hero" aria-labelledby="church-name">
+        <h1 id="church-name" class="cover-title">
+          <span>DEHIWALA</span> <span>COMMUNITY</span> <span>CHURCH</span>
+        </h1>
+        <div class="cover-copy">
+          <p class="cover-tamil" lang="ta">தெஹிவளை சமூக திருச்சபை</p>
+          <p class="cover-sinhala" lang="si">දෙහිවල ප්‍රජා දේවස්ථානය</p>
+          <p class="cover-association">
+            Associated with Christian Revival Crusade; Reg. No. N(A)592
+          </p>
+          <div class="cover-services">
+            <h2>Sunday Services</h2>
+            <p><strong>English</strong><span>8:00 AM – 9:00 AM</span></p>
+            <p><strong>Tamil</strong><span>10:00 AM – 11:30 AM</span></p>
+          </div>
         </div>
-    </div>
+        <img
+          class="cover-drawing"
+          src="/static/images/church-drawing.png"
+          width="1625"
+          height="1308"
+          fetchpriority="high"
+          alt="Architectural line drawing of the Dehiwala church building"
+        />
+      </section>
 
+      <section class="description section-bg">
+        <h2>WORSHIP,<br />WORD, AND<br /><span>SERVICE</span></h2>
+        <p class="fade-in delay-1">
+          We are a Church that is centered on Worship, Word, and Service for the
+          Glory of God. We uphold the primary authority of Scripture, affirm
+          allegiance to the historic Nicene Faith, and commit ourselves to
+          holistic mission and ministry in the world.
+        </p>
+      </section>
 
-    <!--Sermon Page -->
-   <div id="sermons" class="page">
-        <div class="sermons-page">
-            <h1 class="fade-in">Sermons</h1>
-
-            <div class="sermons-intro fade-in delay-1">
-                <p>Experience powerful, life-changing messages from God's Word. Each sermon is carefully prepared to encourage, challenge, and inspire you in your walk with Christ. Watch or listen anytime, anywhere.</p>
-            </div>
-
-            <div class="sermons-grid" id="sermons-container">
-                <!-- Sample Sermon Cards - Will be loaded from backend -->
-                <div class="sermon-card scale-in" onclick="openSermon('sample1')">
-                    <div class="sermon-image">
-                        <img src="{{ url_for('static', filename='images/sermon1.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
-                        <div class="sermon-play-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="sermon-content">
-                        <div class="sermon-meta">
-                            <span class="sermon-date">
-                                <i class="fas fa-calendar"></i> Dec 29, 2016
-                            </span>
-                            <span class="sermon-preacher">
-                                <i class="fas fa-user"></i> Pastor Niranjan
-                            </span>
-                        </div>
-                        <h3 class="sermon-title">True Fasting</h3>
-                        <p class="sermon-description">As a church we sought the face of the Lord in fasting for a week.. But it was good for God to speak to us through Pastor Niranjan.. He reminded us of the true meaning of fasting...</p>
-                        <div class="sermon-badges">
-                            <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
-<!--                            <span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>-->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sermon-card scale-in delay-1" onclick="openSermon('sample2')">
-                    <div class="sermon-image">
-                        <img src="{{ url_for('static', filename='images/sermon2.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
-                        <div class="sermon-play-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="sermon-content">
-                        <div class="sermon-meta">
-                            <span class="sermon-date">
-                                <i class="fas fa-calendar"></i> Aug 13, 2016
-                            </span>
-                            <span class="sermon-preacher">
-                                <i class="fas fa-user"></i> Pastor Robert Gallagher
-                            </span>
-                        </div>
-                        <h3 class="sermon-title">God is in the boat</h3>
-                        <p class="sermon-description">A biblical exegesis of Mark 4: 35-41 .. The story exists to remind us that God is in the boat with us, and all we need to do is have some faith that he would take us to the other side as he promised!!! Watch, listen and be blessed!</p>
-                        <div class="sermon-badges">
-                            <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
-<!--                            <span class="sermon-badge"><i class="fas fa-headphones"></i> Audio</span>-->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sermon-card scale-in delay-2" onclick="openSermon('sample3')">
-                    <div class="sermon-image">
-                        <img src="{{ url_for('static', filename='images/sermon3.jpg') }}" alt="Sermon" onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'">
-                        <div class="sermon-play-overlay">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div class="sermon-content">
-                        <div class="sermon-meta">
-                            <span class="sermon-date">
-                                <i class="fas fa-calendar"></i> Jul 10, 2016
-                            </span>
-                            <span class="sermon-preacher">
-                                <i class="fas fa-user"></i>Pastor Nathanael Somanathan
-                            </span>
-                        </div>
-                        <h3 class="sermon-title">Sermon Excerpt - Truth Lovers</h3>
-                        <p class="sermon-description">Seeking for a reformation within tamil christian circles, with a resurgence of Gospel centred truth and sound doctrine!!</p>
-                        <div class="sermon-badges">
-                           <span class="sermon-badge"><i class="fas fa-video"></i> Video</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <section class="events">
+        <h2 class="fade-in">Recent Events</h2>
+        <div
+          class="events-container"
+          id="home-events"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <p class="event-state">Loading church events…</p>
         </div>
+      </section>
+
+      <section class="contact" id="contact-section">
+        <div class="contact-container">
+          <h2 class="fade-in">Get In Touch</h2>
+          <form
+            action="/submit_inquiry"
+            method="post"
+            class="contact-form slide-in-left"
+            data-inquiry-form
+            aria-label="Contact Form"
+          >
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label for="note">Message</label>
+              <textarea
+                id="note"
+                name="note"
+                rows="5"
+                required
+                aria-required="true"
+              ></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+            <p
+              class="form-status"
+              role="status"
+              aria-live="polite"
+              tabindex="-1"
+            ></p>
+          </form>
+          <div class="map-section slide-in-right">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.3182487910188!2d79.86181370442131!3d6.857847752510653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b001188897b%3A0xb236fbdc4c21d5b!2sDehiwala%20Community%20Church!5e0!3m2!1sen!2slk!4v1792655545976!5m2!1sen!2slk"
+              width="100%"
+              height="300"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              aria-label="Map showing church location"
+            ></iframe>
+            <div class="location-info">
+              <h3>Visit Us</h3>
+              <a
+                class="directions-link"
+                href="https://maps.app.goo.gl/gJfW6nuXkyUPhdKv9"
+                target="_blank"
+                rel="noopener"
+                >Get directions ↗</a
+              >
+              <p>
+                <i class="fas fa-map-marker-alt"></i> 23, Campbell Place,
+                Dehiwala, Sri Lanka
+              </p>
+              <p><i class="fas fa-clock"></i> Always Welcomed</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <!-- Sermon Modal -->
+    <div
+      id="about"
+      class="page{% if current_page == 'about' %} active{% endif %}"
+    >
+      {% include 'about_story.html' %}
+    </div>
+
+    <div
+      id="sermons"
+      class="page{% if current_page == 'sermons' %} active{% endif %}"
+    >
+      <div class="sermons-page">
+        <h1 class="fade-in">Sermons</h1>
+
+        <div class="sermons-intro fade-in delay-1">
+          <p>
+            Experience powerful, life-changing messages from God's Word. Each
+            sermon is carefully prepared to encourage, challenge, and inspire
+            you in your walk with Christ. Watch or listen anytime, anywhere.
+          </p>
+        </div>
+
+        <div class="sermons-grid" id="sermons-container">
+          <div class="sermon-card scale-in" onclick="openSermon('sample1')">
+            <div class="sermon-image">
+              <img
+                src="{{ url_for('static', filename='images/sermon1.jpg') }}"
+                alt="Sermon"
+                onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'"
+              />
+              <div class="sermon-play-overlay">
+                <i class="fas fa-play"></i>
+              </div>
+            </div>
+            <div class="sermon-content">
+              <div class="sermon-meta">
+                <span class="sermon-date">
+                  <i class="fas fa-calendar"></i> Dec 29, 2016
+                </span>
+                <span class="sermon-preacher">
+                  <i class="fas fa-user"></i> Pastor Niranjan
+                </span>
+              </div>
+              <h3 class="sermon-title">True Fasting</h3>
+              <p class="sermon-description">
+                As a church we sought the face of the Lord in fasting for a
+                week.. But it was good for God to speak to us through Pastor
+                Niranjan.. He reminded us of the true meaning of fasting...
+              </p>
+              <div class="sermon-badges">
+                <span class="sermon-badge"
+                  ><i class="fas fa-video"></i> Video</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="sermon-card scale-in delay-1"
+            onclick="openSermon('sample2')"
+          >
+            <div class="sermon-image">
+              <img
+                src="{{ url_for('static', filename='images/sermon2.jpg') }}"
+                alt="Sermon"
+                onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'"
+              />
+              <div class="sermon-play-overlay">
+                <i class="fas fa-play"></i>
+              </div>
+            </div>
+            <div class="sermon-content">
+              <div class="sermon-meta">
+                <span class="sermon-date">
+                  <i class="fas fa-calendar"></i> Aug 13, 2016
+                </span>
+                <span class="sermon-preacher">
+                  <i class="fas fa-user"></i> Pastor Robert Gallagher
+                </span>
+              </div>
+              <h3 class="sermon-title">God is in the boat</h3>
+              <p class="sermon-description">
+                A biblical exegesis of Mark 4: 35-41 .. The story exists to
+                remind us that God is in the boat with us, and all we need to do
+                is have some faith that he would take us to the other side as he
+                promised!!! Watch, listen and be blessed!
+              </p>
+              <div class="sermon-badges">
+                <span class="sermon-badge"
+                  ><i class="fas fa-video"></i> Video</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="sermon-card scale-in delay-2"
+            onclick="openSermon('sample3')"
+          >
+            <div class="sermon-image">
+              <img
+                src="{{ url_for('static', filename='images/sermon3.jpg') }}"
+                alt="Sermon"
+                onerror="this.src='{{ url_for('static', filename='images/event.jpg') }}'"
+              />
+              <div class="sermon-play-overlay">
+                <i class="fas fa-play"></i>
+              </div>
+            </div>
+            <div class="sermon-content">
+              <div class="sermon-meta">
+                <span class="sermon-date">
+                  <i class="fas fa-calendar"></i> Jul 10, 2016
+                </span>
+                <span class="sermon-preacher">
+                  <i class="fas fa-user"></i>Pastor Nathanael Somanathan
+                </span>
+              </div>
+              <h3 class="sermon-title">Sermon Excerpt - Truth Lovers</h3>
+              <p class="sermon-description">
+                Seeking for a reformation within tamil christian circles, with a
+                resurgence of Gospel centred truth and sound doctrine!!
+              </p>
+              <div class="sermon-badges">
+                <span class="sermon-badge"
+                  ><i class="fas fa-video"></i> Video</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="sermon-modal" id="sermonModal">
-        <div class="sermon-modal-content">
-            <div class="sermon-modal-header">
-                <button class="close-sermon" onclick="closeSermon()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h2 class="sermon-modal-title" id="sermonTitle"></h2>
-                <div class="sermon-modal-meta">
-                    <span id="sermonDate"></span>
-                    <span id="sermonPreacher"></span>
-                </div>
-            </div>
-            <div class="sermon-modal-body">
-                <div id="sermonVideoContainer"></div>
-                <div id="sermonAudioContainer"></div>
-                <div class="sermon-description-full" id="sermonDescription"></div>
-            </div>
+      <div class="sermon-modal-content">
+        <div class="sermon-modal-header">
+          <button class="close-sermon" onclick="closeSermon()">
+            <i class="fas fa-times"></i>
+          </button>
+          <h2 class="sermon-modal-title" id="sermonTitle"></h2>
+          <div class="sermon-modal-meta">
+            <span id="sermonDate"></span>
+            <span id="sermonPreacher"></span>
+          </div>
         </div>
+        <div class="sermon-modal-body">
+          <div id="sermonVideoContainer"></div>
+          <div id="sermonAudioContainer"></div>
+          <div class="sermon-description-full" id="sermonDescription"></div>
+        </div>
+      </div>
     </div>
 
-    <div id="ministries" class="page">
-            <div class="ministries-content">
-                <h1>Ministries</h1>
-                <p class="fade-in delay-1">At Christian Revival Crusade, we believe in serving God through diverse ministries that touch every generation. Each ministry is designed to nurture faith, build community, and serve others in the love of Christ.</p>
-            </div>
-            <div class="ministries-grid">
-                    <!-- Bethel Home -->
-                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
-                        <div class="ministry-icon1">
-                            <h3>Bethel Home</h3>
-                        </div>
-                        <div class="ministry-info">
-                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
-                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
-                        </div>
-                    </div>
-                    <!-- Children's Ministry -->
-                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
-                        <div class="ministry-icon1">
-                            <h3>Rakwana Sub Church</h3>
-                        </div>
-                        <div class="ministry-info">
-                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
-                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
-                        </div>
-                    </div>
-                    <!-- Children's Ministry -->
-                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
-                        <div class="ministry-icon1">
-                            <h3>Dematagoda Sub Church</h3>
-                        </div>
-                        <div class="ministry-info">
-                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
-                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
-                        </div>
-                    </div>
-                    <!-- Children's Ministry -->
-                    <div class="ministry-card scale-in" onclick="openMinistry('children')">
-                        <div class="ministry-icon1">
-                            <h3>Vavuniya School</h3>
-                        </div>
-                        <div class="ministry-info">
-                            <p>Building strong foundations of faith in our youngest members through engaging Bible lessons, worship, and activities.</p>
-                            <span class="view-more">Learn More <i class="fas fa-arrow-right"></i></span>
-                        </div>
-                    </div>
-            </div>
+    <div
+      id="ministries"
+      class="page{% if current_page == 'ministries' %} active{% endif %}"
+    >
+      <div class="ministries-content">
+        <h1>Ministries</h1>
+        <p class="fade-in delay-1">
+          At Christian Revival Crusade, we believe in serving God through
+          diverse ministries that touch every generation. Each ministry is
+          designed to nurture faith, build community, and serve others in the
+          love of Christ.
+        </p>
+      </div>
+      <div class="ministries-grid">
+        <div class="ministry-card scale-in" onclick="openMinistry('children')">
+          <div class="ministry-icon1">
+            <h3>Bethel Home</h3>
+          </div>
+          <div class="ministry-info">
+            <p>
+              Building strong foundations of faith in our youngest members
+              through engaging Bible lessons, worship, and activities.
+            </p>
+            <span class="view-more"
+              >Learn More <i class="fas fa-arrow-right"></i
+            ></span>
+          </div>
+        </div>
+
+        <div class="ministry-card scale-in" onclick="openMinistry('children')">
+          <div class="ministry-icon1">
+            <h3>Rakwana Sub Church</h3>
+          </div>
+          <div class="ministry-info">
+            <p>
+              Building strong foundations of faith in our youngest members
+              through engaging Bible lessons, worship, and activities.
+            </p>
+            <span class="view-more"
+              >Learn More <i class="fas fa-arrow-right"></i
+            ></span>
+          </div>
+        </div>
+
+        <div class="ministry-card scale-in" onclick="openMinistry('children')">
+          <div class="ministry-icon1">
+            <h3>Dematagoda Sub Church</h3>
+          </div>
+          <div class="ministry-info">
+            <p>
+              Building strong foundations of faith in our youngest members
+              through engaging Bible lessons, worship, and activities.
+            </p>
+            <span class="view-more"
+              >Learn More <i class="fas fa-arrow-right"></i
+            ></span>
+          </div>
+        </div>
+
+        <div class="ministry-card scale-in" onclick="openMinistry('children')">
+          <div class="ministry-icon1">
+            <h3>Vavuniya School</h3>
+          </div>
+          <div class="ministry-info">
+            <p>
+              Building strong foundations of faith in our youngest members
+              through engaging Bible lessons, worship, and activities.
+            </p>
+            <span class="view-more"
+              >Learn More <i class="fas fa-arrow-right"></i
+            ></span>
+          </div>
+        </div>
+      </div>
     </div>
 
-        <!-- Space Rental Page -->
-    <div id="space-rentals" class="page">
-            <div class="space-rental-page">
-                <h1>Space Rental</h1>
-                <div class="rental-intro fade-in delay-1">
-                    <p>Our church facilities are available for rental for various events and gatherings. We offer beautiful, well-maintained spaces perfect for weddings, conferences, celebrations, and community events.</p>
-                    <p>All rentals support our church ministries and community outreach programs. Contact us to discuss availability and pricing.</p>
-                </div>
+    <div
+      id="space-rentals"
+      class="page{% if current_page == 'space-rentals' %} active{% endif %}"
+    >
+      <div class="space-rental-page">
+        <h1>Space Rental</h1>
+        <div class="rental-intro fade-in delay-1">
+          <p>
+            Our church facilities are available for rental for various events
+            and gatherings. We offer beautiful, well-maintained spaces perfect
+            for weddings, conferences, celebrations, and community events.
+          </p>
+          <p>
+            All rentals support our church ministries and community outreach
+            programs. Contact us to discuss availability and pricing.
+          </p>
+        </div>
 
+        <p class="venue-capacity">
+          Main Sanctuary <span>Up to 250 people</span>
+        </p>
+        <div
+          class="slideshow-container"
+          role="region"
+          aria-label="Church venue photographs"
+        >
+          <div class="mySlides fade">
+            <div class="numbertext">1 / 6</div>
+            <img
+              src="{{ url_for('static', filename='images/c2.JPG') }}"
+              style="width: 100%"
+            />
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">2 / 6</div>
+            <img
+              src="{{ url_for('static', filename='images/c3.jpeg') }}"
+              style="width: 100%"
+            />
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">3 / 6</div>
+            <img
+              src="{{ url_for('static', filename='images/c4.jpeg') }}"
+              style="width: 100%"
+            />
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">4 / 6</div>
+            <img
+              src="{{ url_for('static', filename='images/c5.jpg') }}"
+              style="width: 100%"
+            />
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">5 / 6</div>
+            <img
+              src="{{ url_for('static', filename='images/c6.jpeg') }}"
+              style="width: 100%"
+            />
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">6 / 6</div>
+            <img
+              src="{{ url_for('static', filename='images/c7.JPG') }}"
+              style="width: 100%"
+            />
+          </div>
+          <button
+            type="button"
+            class="prev"
+            data-gallery-step="-1"
+            aria-label="Previous photograph"
+          >
+            &#10094;
+          </button>
+          <button
+            type="button"
+            class="next"
+            data-gallery-step="1"
+            aria-label="Next photograph"
+          >
+            &#10095;
+          </button>
+        </div>
+        <br />
 
+        <div style="text-align: center">
+          <button
+            type="button"
+            class="dot"
+            data-gallery-index="0"
+            aria-label="View photograph 1"
+          ></button>
+          <button
+            type="button"
+            class="dot"
+            data-gallery-index="1"
+            aria-label="View photograph 2"
+          ></button>
+          <button
+            type="button"
+            class="dot"
+            data-gallery-index="2"
+            aria-label="View photograph 3"
+          ></button>
+          <button
+            type="button"
+            class="dot"
+            data-gallery-index="3"
+            aria-label="View photograph 4"
+          ></button>
+          <button
+            type="button"
+            class="dot"
+            data-gallery-index="4"
+            aria-label="View photograph 5"
+          ></button>
+          <button
+            type="button"
+            class="dot"
+            data-gallery-index="5"
+            aria-label="View photograph 6"
+          ></button>
+        </div>
 
-                <div class="slideshow-container">
-                    <div class="mySlides fade">
-                        <div class="numbertext">1 / 6</div>
-                        <img src="{{ url_for('static', filename='images/c2.JPG') }}" style="width:100%">
-                    </div>
-                    <div class="mySlides fade">
-                        <div class="numbertext">2 / 6</div>
-                        <img src="{{ url_for('static', filename='images/c3.jpeg') }}" style="width:100%">
-                    </div>
-                    <div class="mySlides fade">
-                        <div class="numbertext">3 / 6</div>
-                        <img src="{{ url_for('static', filename='images/c4.jpeg') }}" style="width:100%">
-                    </div>
-                    <div class="mySlides fade">
-                        <div class="numbertext">4 / 6</div>
-                        <img src="{{ url_for('static', filename='images/c5.jpg') }}" style="width:100%">
-                    </div>
-                    <div class="mySlides fade">
-                        <div class="numbertext">5 / 6</div>
-                        <img src="{{ url_for('static', filename='images/c6.jpeg') }}" style="width:100%">
-                    </div>
-                    <div class="mySlides fade">
-                        <div class="numbertext">6 / 6</div>
-                        <img src="{{ url_for('static', filename='images/c7.JPG') }}" style="width:100%">
-                    </div>
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                </div>
-                <br>
+        <div class="gallery-playback-controls">
+          <button type="button" data-gallery-playback aria-pressed="false">
+            Pause slideshow
+          </button>
+        </div>
 
-                <!-- The dots/circles -->
-                <div style="text-align:center">
-                  <span class="dot" onclick="currentSlide(1)"></span>
-                  <span class="dot" onclick="currentSlide(2)"></span>
-                  <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                  <span class="dot" onclick="currentSlide(5)"></span>
-                  <span class="dot" onclick="currentSlide(6)"></span>
-                </div>
-
-
-
-<!--                <div class="spaces-grid">-->
-<!--                    <div class="space-card scale-in">-->
-<!--                        <img src="{{ url_for('static', filename='images/c2.JPG') }}">-->
-<!--                    </div>-->
-<!--                    <div class="space-card scale-in">-->
-<!--                        <img src="{{ url_for('static', filename='images/c3.jpeg') }}">-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="slider">-->
-
-<!--                    <div class="slide-track">-->
-
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c2.JPG') }}">-->
-<!--                        </div>-->
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c3.jpeg') }}">-->
-<!--                        </div>-->
-<!--                         <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c4.jpeg') }}">-->
-<!--                        </div>-->
-<!--                         <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c5.jpg') }}">-->
-<!--                        </div>-->
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c6.jpeg') }}">-->
-<!--                        </div>-->
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c7.JPG') }}">-->
-<!--                        </div>-->
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c2.JPG') }}">-->
-<!--                        </div>-->
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c3.jpeg') }}">-->
-<!--                        </div>-->
-<!--                         <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c4.jpeg') }}">-->
-<!--                        </div>-->
-<!--                         <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c5.jpg') }}">-->
-<!--                        </div>-->
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c6.jpeg') }}">-->
-<!--                        </div>-->
-<!--                        <div class="slide">-->
-<!--                            <img src="{{ url_for('static', filename='images/c7.JPG') }}">-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-
-<!--                </div>-->
-
-                <div class="rental-form-section fade-in">
-                    <form class="rental-form" onsubmit="submitRentalRequest(event)" aria-label="Space Rental Request Form">
-                        <h2>Space Rental Request Form</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="rental-name">Full Name *</label>
-                                <input type="text" id="rental-name" name="name" required aria-required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="rental-phone">Phone Number *</label>
-                                <input type="tel" id="rental-phone" name="phone" required aria-required="true">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="rental-email">Email Address *</label>
-                                <input type="email" id="rental-email" name="email" required aria-required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="event-type">Event Type *</label>
-                                <select id="event-type" name="event_type" required aria-required="true">
-                                    <option value="">Select event type</option>
-                                    <option value="Conference">Conference</option>
-                                    <option value="Meeting">Meeting</option>
-                                    <option value="Seminar">Seminar</option>
-                                    <option value="Wedding">Wedding</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="space-requested">Space Requested *</label>
-                                <select id="space-requested" name="space_requested" required aria-required="true">
-                                    <option value="">Select space</option>
-                                    <option value="Main Sanctuary">Main Sanctuary (150 people)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="guest-count">Expected Guest Count *</label>
-                                <input type="number" id="guest-count" name="guest_count" min="1" required aria-required="true">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="event-date">Event Date *</label>
-                                <input type="date" id="event-date" name="event_date" required aria-required="true">
-                            </div>
-                            <div class="form-group">
-                                <label for="start-time">Start Time *</label>
-                                <input type="time" id="start-time" name="start_time" required aria-required="true">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="end-time">End Time *</label>
-                                <input type="time" id="end-time" name="end_time" required aria-required="true">
-                            </div>
-                            <div class="form-group"></div>
-                        </div>
-                        <div class="checkbox-group">
-                            <label>Additional Needs (check all that apply):</label>
-                            <div class="checkbox-options">
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="need-sound" name="additional_needs" value="Sound System">
-                                    <label for="need-sound">Sound System</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="need-projector" name="additional_needs" value="Projector/Screen">
-                                    <label for="need-projector">Projector/Screen</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="need-parking" name="additional_needs" value="Extended Parking">
-                                    <label for="need-parking">Extended Parking</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row full-width">
-                            <div class="form-group">
-                                <label for="rental-message">Additional Details/Special Requests</label>
-                                <textarea id="rental-message" name="message" rows="5" placeholder="Please provide any additional details about your event, special requirements, or questions..."></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-btn">Submit Rental Request</button>
-                        <p style="margin-top: 1rem; text-align: center; color: #666; font-size: 0.9rem;">
-                            * Required fields. We will contact you within 24-48 hours to discuss availability and pricing.
-                        </p>
-                    </form>
-                </div>
+        <div class="rental-form-section fade-in">
+          <form
+            action="/api/space-rental"
+            method="post"
+            class="rental-form"
+            data-rental-form
+            aria-label="Space Rental Request Form"
+          >
+            <h2>Space Rental Request Form</h2>
+            <p class="booking-note">
+              This is an enquiry. Your booking is confirmed only after the
+              church team agrees availability and arrangements.
+            </p>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rental-name">Full Name *</label>
+                <input
+                  type="text"
+                  id="rental-name"
+                  name="name"
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div class="form-group">
+                <label for="rental-phone">Phone Number *</label>
+                <input
+                  type="tel"
+                  id="rental-phone"
+                  name="phone"
+                  required
+                  aria-required="true"
+                />
+              </div>
             </div>
-    </div>
-<!--hi-->
-
-        <!-- Events Page -->
-    <div id="events" class="page">
-            <div class="events-page">
-                <h1>Church Events</h1>
-                <div class="events-container" id="all-events">
-                    <!-- Events will be loaded dynamically -->
-                </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rental-email">Email Address *</label>
+                <input
+                  type="email"
+                  id="rental-email"
+                  name="email"
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div class="form-group">
+                <label for="event-type">Event Type *</label>
+                <select
+                  id="event-type"
+                  name="event_type"
+                  required
+                  aria-required="true"
+                >
+                  <option value="">Select event type</option>
+                  <option value="Conference">Conference</option>
+                  <option value="Meeting">Meeting</option>
+                  <option value="Seminar">Seminar</option>
+                  <option value="Wedding">Wedding</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="space-requested">Space Requested *</label>
+                <select
+                  id="space-requested"
+                  name="space_requested"
+                  required
+                  aria-required="true"
+                >
+                  <option value="">Select space</option>
+                  <option value="Main Sanctuary">
+                    Main Sanctuary (250 people)
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="guest-count">Expected Guest Count *</label>
+                <input
+                  type="number"
+                  id="guest-count"
+                  name="guest_count"
+                  min="1"
+                  max="250"
+                  required
+                  aria-required="true"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="event-date">Event Date *</label>
+                <input
+                  type="date"
+                  id="event-date"
+                  name="event_date"
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div class="form-group">
+                <label for="start-time">Start Time *</label>
+                <input
+                  type="time"
+                  id="start-time"
+                  name="start_time"
+                  required
+                  aria-required="true"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="end-time">End Time *</label>
+                <input
+                  type="time"
+                  id="end-time"
+                  name="end_time"
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div class="form-group"></div>
+            </div>
+            <div class="checkbox-group">
+              <label>Additional Needs (check all that apply):</label>
+              <div class="checkbox-options">
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="need-sound"
+                    name="additional_needs"
+                    value="Sound System"
+                  />
+                  <label for="need-sound">Sound System</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="need-projector"
+                    name="additional_needs"
+                    value="Projector/Screen"
+                  />
+                  <label for="need-projector">Projector/Screen</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="need-parking"
+                    name="additional_needs"
+                    value="Extended Parking"
+                  />
+                  <label for="need-parking">Extended Parking</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row full-width">
+              <div class="form-group">
+                <label for="rental-message"
+                  >Additional Details/Special Requests</label
+                >
+                <textarea
+                  id="rental-message"
+                  name="message"
+                  rows="5"
+                  placeholder="Please provide any additional details about your event, special requirements, or questions..."
+                ></textarea>
+              </div>
+            </div>
+            <button type="submit" class="submit-btn">
+              Submit Rental Request
+            </button>
+            <p
+              style="
+                margin-top: 1rem;
+                text-align: center;
+                color: #666;
+                font-size: 0.9rem;
+              "
+            >
+              * Required fields. We will contact you within 24-48 hours to
+              discuss availability and pricing.
+            </p>
+            <p
+              class="form-status"
+              role="status"
+              aria-live="polite"
+              tabindex="-1"
+            ></p>
+          </form>
+        </div>
+      </div>
     </div>
 
+    <div
+      id="events"
+      class="page{% if current_page == 'events' %} active{% endif %}"
+    >
+      <div class="events-page">
+        <h1>Church Events</h1>
+        <div
+          class="events-container"
+          id="all-events"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <p class="event-state">Loading church events…</p>
+        </div>
+      </div>
+    </div>
 
-    <!-- Footer -->
     <footer class="footer" role="contentinfo">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p><i class="fas fa-map-marker-alt"></i> 23, Campbell Place, Dehiwala, Sri Lanka</p>
-                <p><i class="fas fa-phone"></i> (+94) 077 235 7933 | 011 2 730549</p>
-                <p><i class="fas fa-envelope"></i>dehiwalacommunitychurch@gmail.com</p>
-            </div>
-            <div class="footer-section">
-                <h3>Service Times</h3>
-                <p><i class="fas fa-clock"></i> English Service: 8:00 AM - 9:00 AM</p>
-                <p><i class="fas fa-clock"></i> Children's Sunday School: 9:00 AM - 9:45 AM</p>
-                <p><i class="fas fa-clock"></i> Tamil Service: 10:00 AM - 11:30 AM</p>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/CRCSriLankaDehiwala/"
-                       title="Facebook" aria-label="Follow us on Facebook"
-                       target="_blank" rel="noopener noreferrer">
-                       <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@crcchurchsrilanka2461"
-                       title="YouTube" aria-label="Follow us on YouTube"
-                       target="_blank" rel="noopener noreferrer">
-                       <i class="fab fa-youtube"></i>
-                    </a>
-
-                </div>
-            </div>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Contact Info</h3>
+          <p>
+            <i class="fas fa-map-marker-alt"></i>23, Campbell Place, Dehiwala,
+            Sri Lanka
+          </p>
+          <p class="footer-phone">
+            <i class="fas fa-phone" aria-hidden="true"></i>
+            <span class="footer-phone-numbers">
+              <a href="tel:+94772357933">077 235 7933</a>
+              <a href="tel:+94112730549">011 273 0549</a>
+            </span>
+          </p>
+          <p>
+            <i class="fas fa-envelope"></i
+            ><a href="mailto:dehiwalacommunitychurch@gmail.com"
+              >dehiwalacommunitychurch@gmail.com</a
+            >
+          </p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Christian Revival Crusade. All rights reserved.</p>
+        <div class="footer-section">
+          <h3>Service Times</h3>
+          <p><i class="fas fa-clock"></i> English Service: 8:00 AM - 9:00 AM</p>
+          <p>
+            <i class="fas fa-clock"></i> Children's Sunday School: 9:00 AM -
+            9:45 AM
+          </p>
+          <p><i class="fas fa-clock"></i> Tamil Service: 10:00 AM - 11:30 AM</p>
         </div>
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/DehiwalaCommunityChurch/"
+              title="Facebook"
+              aria-label="Follow us on Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/@crcchurchsrilanka2461"
+              title="YouTube"
+              aria-label="Follow us on YouTube"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Dehiwala Community Church. All rights reserved.</p>
+      </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
+    <script src="{{ url_for('static', filename='js/public.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='js/legacy-sermons.js') }}"
+      defer
+    ></script>
+  </body>
 </html>

@@ -1,0 +1,22 @@
+{% extends 'admin_base.html' %}{% set active = 'sermons' %} {% block title
+%}Sermons{% endblock %} {% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">BACKEND SECTION</p>
+    <h1>Sermons</h1>
+    <p>Retained for future sermon management.</p>
+  </div>
+</div>
+<section class="panel sermon-placeholder">
+  <span class="placeholder-symbol" aria-hidden="true">▤</span>
+  <h2>Sermon management is not enabled</h2>
+  <p>
+    This section remains in the backend. Saving, editing and deleting sermons
+    are unavailable until the sermon data integration is completed.
+  </p>
+  <p class="field-hint">Sermons are not listed in the public navigation.</p>
+  <a class="button secondary" href="{{ url_for('admin_dashboard') }}"
+    >Back to overview</a
+  >
+</section>
+{% endblock %}

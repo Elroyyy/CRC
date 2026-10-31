@@ -1,0 +1,86 @@
+{% extends 'admin_base.html' %}{% set active = 'events' %} {% block title
+%}Events{% endblock %} {% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">CHURCH LIFE</p>
+    <h1>Events</h1>
+    <p>Keep event details and photographs up to date on the website.</p>
+  </div>
+  <a class="button primary" href="{{ url_for('admin_add_event') }}"
+    >+ Add event</a
+  >
+</div>
+<section class="panel" data-list>
+  <div class="list-toolbar">
+    <label class="search-label"
+      >Search events<input
+        type="search"
+        data-search
+        placeholder="Search by title or description" /></label
+    ><label
+      >Event date<select data-date-filter>
+        <option value="">All dates</option>
+        <option value="upcoming">Today and upcoming</option>
+        <option value="past">Earlier events</option>
+      </select></label
+    >
+  </div>
+  <div class="list-summary" data-result-count aria-live="polite">
+    {{ events | length }} events
+  </div>
+  <div class="event-list">
+    {% for event in events %}
+    <article
+      class="event-list-card"
+      data-record
+      data-date="{{ event.event_date }}"
+      data-search-text="{{ event.title }} {{ event.description }}"
+    >
+      <div class="poster-thumb">
+        {% if event.image_path %}<img
+          src="{{ event.image_path | eventimage }}"
+          alt="{{ event.title }} poster"
+          loading="lazy"
+          data-image-fallback
+        />{% else %}<span>No image</span>{% endif %}
+      </div>
+      <div class="row-copy">
+        <p class="eyebrow">{{ event.event_date | dateformat }}</p>
+        <h2>{{ event.title }}</h2>
+        <p class="event-excerpt">{{ event.description }}</p>
+        <small>Added {{ event.created_at | admindatetime }}</small>
+      </div>
+      <div class="record-actions">
+        <a
+          class="button secondary"
+          href="{{ url_for('admin_edit_event', event_id=event.id) }}"
+          >Edit event</a
+        >
+        <form
+          method="post"
+          action="{{ url_for('admin_delete_event', event_id=event.id) }}"
+          data-delete-event
+          data-event-title="{{ event.title }}"
+        >
+          <input
+            type="hidden"
+            name="_csrf_token"
+            value="{{ csrf_token() }}"
+          /><button class="text-danger" type="submit">Delete</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  <p class="empty" data-no-results {% if events %}hidden{% endif %}>
+    {% if load_error %}Events are temporarily unavailable.{% else %}No events to
+    show. Add an event or adjust your search.{% endif %}
+  </p>
+  <div class="pagination" data-pagination hidden>
+    <button type="button" class="button secondary" data-page-prev>
+      Previous</button
+    ><span data-page-status></span
+    ><button type="button" class="button secondary" data-page-next>Next</button>
+  </div>
+</section>
+{% endblock %}

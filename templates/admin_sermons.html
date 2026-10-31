@@ -268,7 +268,7 @@
                             <h3 class="sermon-admin-title">{{ sermon.title }}</h3>
 
                             <div class="sermon-admin-meta">
-                                <span><i class="fas fa-calendar"></i> {{ sermon[sermon_date] | dateformat}}</span>
+                                <span><i class="fas fa-calendar"></i> {{ sermon['sermon_date'] | dateformat}}</span>
                                 <span><i class="fas fa-user"></i> {{ sermon.preacher or 'Pastor' }}</span>
                             </div>
 
@@ -289,11 +289,14 @@
                                 <a href="{{ url_for('admin_edit_sermon', sermon_id=sermon.id) }}" class="edit-btn">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                <a href="{{ url_for('admin_delete_sermon', sermon_id=sermon.id) }}"
-                                   class="delete-btn"
-                                   onclick="return confirm('Are you sure you want to delete this sermon? All associated files will be removed.')">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
+                                <form method="POST"
+                                      action="{{ url_for('admin_delete_sermon', sermon_id=sermon.id) }}"
+                                      onsubmit="return confirm('Are you sure you want to delete this sermon? All associated files will be removed.')">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="delete-btn">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
